@@ -1,18 +1,24 @@
 (ns clojure-tic-tac-toe.board)
 
 (defn make-new [size]
-  (vec (repeat size "*")))
-
-(defn open-space? [index cells]
-  (if (= "*" (get cells index)) true false))
+  (vec (range size)))
 
 (defn full? [cells]
-  (= 9 (count (filter (fn [cell] (not (= "*" cell)))cells))))
+  (= 9 (count (filter string? cells))))
+
+(defn open-space? [index cells]
+  (if (number? (get cells index)) true false))
 
 (defn valid-space? [index]
-  (if (<= index 9) true false))
+  (<= index 9))
 
 (defn open-and-valid? [index cells]
   (cond
     (and (open-space? index cells) (valid-space? index)) true
     :else false))
+
+(defn find-open-spaces [cells]
+  (filter (fn [cell] (number? cell)) cells))
+
+(defn place-move [index player-piece cells]
+  (assoc cells index player-piece))
