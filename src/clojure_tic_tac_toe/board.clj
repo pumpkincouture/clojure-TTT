@@ -8,3 +8,11 @@
 
 (defn full? [cells]
   (= 9 (count (filter (fn [cell] (not (= "*" cell)))cells))))
+
+(defn valid-space? [index]
+  (if (<= index 9) true false))
+
+(defn open-and-valid? [index cells]
+  (cond
+    (and (open-space? index cells) (valid-space? index)) true
+    :else false))
