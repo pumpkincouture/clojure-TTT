@@ -1,10 +1,10 @@
 (ns clojure-tic-tac-toe.board)
 
 (defn make-new [size]
-  (vec (range size)))
+  (vec (range 1 (inc size))))
 
-(defn full? [cells]
-  (= 9 (count (filter string? cells))))
+(defn full? [size cells]
+  (= size (count (filter string? cells))))
 
 (defn open-space? [index cells]
   (if (number? (get cells index)) true false))
@@ -22,3 +22,45 @@
 
 (defn place-move [index player-piece cells]
   (assoc cells index player-piece))
+
+(defn delete-move [index cells]
+  (assoc cells index (+ 1 index)))
+
+(defn find-opponent-piece [player-piece cells]
+  (nth (filter (fn [cell]
+    (and (not (= player-piece cell)) (not (number? cell))))
+      cells) 0))
+
+(defn winner-row-one? [player-piece cells]
+  (every? #{player-piece} (subvec cells 0 2)))
+
+(defn winner-row-two? [player-piece cells]
+  (every? #{player-piece} (subvec cells 3 5)))
+
+(defn winner-row-three? [player-piece cells]
+  (every? #{player-piece} (subvec cells 6 8)))
+
+(defn winner-column-one? [player-piece cells]
+  (cond
+    (and (= player-piece (get cells 0)) (= player-piece (get cells 3)) (= player-piece (get cells 6))) true
+    :else false))
+
+(defn winner-column-two? [player-piece cells]
+  (cond
+    (and (= player-piece (get cells 1)) (= player-piece (get cells 4)) (= player-piece (get cells 7))) true
+    :else false))
+
+(defn winner-column-three? [player-piece cells]
+  (cond
+    (and (= player-piece (get cells 2)) (= player-piece (get cells 5)) (= player-piece (get cells 8))) true
+    :else false))
+
+(defn winner-diagonal-one? [player-piece cells]
+  (cond
+    (and (= player-piece (get cells 0)) (= player-piece (get cells 4)) (= player-piece (get cells 8))) true
+    :else false))
+
+(defn winner-diagonal-two? [player-piece cells]
+  (cond
+    (and (= player-piece (get cells 2)) (= player-piece (get cells 4)) (= player-piece (get cells 6))) true
+    :else false))
