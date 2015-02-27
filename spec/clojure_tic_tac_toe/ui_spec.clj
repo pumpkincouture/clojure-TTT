@@ -33,4 +33,8 @@
   (it "should print out cat's game if game is a tie"
     (should= "Cat's game!\n"
       (with-out-str (print-tie-game))))
-  )
+
+  (it "should print an error message if input invalid"
+    (should= "That is not a valid choice, please try again!\n"
+      (with-out-str (print-error))))
+)

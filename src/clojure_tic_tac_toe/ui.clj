@@ -23,3 +23,6 @@
 
 (defn print-tie-game []
  (println "Cat's game!"))
+
+(defn print-error []
+  (println "That is not a valid choice, please try again!"))
