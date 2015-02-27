@@ -1,10 +1,13 @@
 (ns clojure-tic-tac-toe.ui)
 
 (defn print-welcome []
- (println "Welcome to Tic Tac Toe"))
+ (println "Welcome to Tic Tac Toe!"))
 
-(defn prompt-for-ai-opponent []
-  (println "Please choose your opponent level : enter 'hard' or 'easy'"))
+(defn prompt-for-piece []
+  (println "Human, please choose your game piece :"))
+
+(defn prompt-for-ai-piece []
+  (println "Human, please pick your opponent's game piece :"))
 
 (defn print-board [board]
   (println (get board 0) (get board 1) (get board 2))
@@ -13,7 +16,7 @@
 )
 
 (defn prompt-for-move [player-piece]
-  (println "Player" player-piece ", please choose a number"))
+  (println "Player" player-piece ", please choose a number :"))
 
 (defn print-choice [player-piece choice]
   (println "Player" player-piece "chose space" choice))

@@ -7,19 +7,15 @@
     (with-out-str (it)))
 
   (it "prints welcome to the game"
-    (should= "Welcome to Tic Tac Toe\n"
+    (should= "Welcome to Tic Tac Toe!\n"
       (with-out-str (print-welcome))))
-
-  (it "should prompt to play between Hard AI or Easy AI"
-    (should= "Please choose your opponent level : enter 'hard' or 'easy'\n"
-      (with-out-str (prompt-for-ai-opponent))))
 
   (it "should print out a 3x3 board"
     (should= "1 2 3\n4 5 6\n7 8 9\n"
       (with-out-str (print-board [1 2 3 4 5 6 7 8 9]))))
 
   (it "should prompt the X player for a move"
-    (should= "Player X , please choose a number\n"
+    (should= "Player X , please choose a number :\n"
       (with-out-str (prompt-for-move "X"))))
 
   (it "should print out what the player has chosen after they made a move"
