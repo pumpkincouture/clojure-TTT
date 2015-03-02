@@ -1,7 +1,9 @@
-(ns clojure-tic-tac-toe.ui)
+(ns clojure-tic-tac-toe.ui
+  (:require
+    [clojure-tic-tac-toe.board :as board]))
 
 (defn print-welcome []
- (println "Welcome to Tic Tac Toe!"))
+ (println "Welcome to Tic Tac Toe! Board is index based, when choosing a piece press 0 for 1, 1 for 2, etc"))
 
 (defn prompt-for-piece []
   (println "Human, please choose your game piece :"))
@@ -10,9 +12,13 @@
   (println "Human, please pick your opponent's game piece :"))
 
 (defn print-board [board]
-  (println (get board 0) (get board 1) (get board 2))
-  (println (get board 3) (get board 4) (get board 5))
-  (println (get board 6) (get board 7) (get board 8))
+  (prn "                 ")
+  (prn (str "  " (board 0) "  |  " (board 1) "  |  " (board 2) "  "))
+  (prn "-----------------")
+  (prn (str "  " (board 3) "  |  " (board 4) "  |  " (board 5) "  "))
+  (prn "-----------------")
+  (prn (str "  " (board 6) "  |  " (board 7) "  |  " (board 8) "  "))
+  (prn "                 ")
 )
 
 (defn prompt-for-move [player-piece]
@@ -26,6 +32,11 @@
 
 (defn print-tie-game []
  (println "Cat's game!"))
+
+(defn print-result [piece-one piece-two board]
+  (if (= true (board/winner? piece-one piece-two board))
+      (println "Game over!")
+      (print-tie-game)))
 
 (defn print-error []
   (println "That is not a valid choice, please try again!"))

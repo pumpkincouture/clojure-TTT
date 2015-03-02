@@ -39,6 +39,10 @@
     (should= '(2 8)
       (find-open-spaces ["X" 2 "X" "O" "X" "O" "O" "X" 8])))
 
+  (it "returns open spaces for board"
+    (should= '(1 2 8)
+      (find-open-spaces [1 2 "X" "O" "X" "O" "O" "X" 8])))
+
   (it "places move on board"
     (should= [1 2 3 4 5 6 7 8 "X"]
       (place-move 8 "X" [1 2 3 4 5 6 7 8 9])))

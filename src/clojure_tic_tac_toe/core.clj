@@ -1,2 +1,1 @@
-(ns clojure-tic-tac-toe.core)
-
+(ns clojure-tic-tac-toe.game)
