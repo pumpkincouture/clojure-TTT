@@ -64,3 +64,20 @@
   (cond
     (and (= player-piece (get cells 2)) (= player-piece (get cells 4)) (= player-piece (get cells 6))) true
     :else false))
+
+(defn any-row-winner? [player-piece cells]
+  (some #(% player-piece cells) [winner-row-one? winner-row-two? winner-row-three?]))
+
+(defn any-column-winner? [player-piece cells]
+  (some #(% player-piece cells) [winner-column-one? winner-column-two? winner-column-three?]))
+
+(defn any-diag-winner? [player-piece cells]
+  (some #(% player-piece cells) [winner-diagonal-one? winner-diagonal-two?]))
+
+(defn winner? [piece-one piece-two cells]
+  (cond
+    (or (some #(% piece-one cells) [any-row-winner? any-column-winner? any-diag-winner?]) (some #(% piece-two cells) [any-row-winner? any-column-winner? any-diag-winner?])) true
+  :else false))
+
+(defn game-over? [piece-one piece-two cells]
+  boolean (or (winner? piece-one piece-two cells) (full? 9 cells)))

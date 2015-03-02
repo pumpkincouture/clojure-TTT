@@ -5,8 +5,6 @@
 (describe "Game"
 
   (it "does not go into continuous if input is wrong"
-    (let [human-piece "y"]
-;      (with-redefs [read-line "1"]
       (should= nil
-        (run-game))))
+        (play-game)))
 )

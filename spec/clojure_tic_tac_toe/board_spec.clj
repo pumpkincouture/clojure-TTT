@@ -68,7 +68,7 @@
   (it "returns false if no winner in first row"
     (should= false
       (winner-row-one? "O" ["O" "X" "X"
-                            4 "X" "O"
+                             4 "X" "O"
                             "O" "X" "O"])))
 
   (it "returns true if winner in second row"
@@ -154,4 +154,40 @@
       (winner-column-three? "O" ["X" "O" "X"
                                  "O" "O" "X"
                                  "X" "O" "X"])))
+
+  (it "returns nil if there is a winner in a row"
+     (should= nil
+       (any-row-winner? "X" ["X" "O" "X"
+                             "O" "O" "X"
+                             "X" "O" "X"])))
+
+  (it "returns true if there is a winner in a column"
+     (should= true
+       (any-column-winner? "O" ["X" "O" "X"
+                                "O" "O" "X"
+                                "X" "O" "X"])))
+
+  (it "returns true if there is a winner in a diagonal"
+     (should= true
+       (any-diag-winner? "O" ["O" "X" "X"
+                              "O" "O" "X"
+                              "X" "O" "O"])))
+
+  (it "returns true if there is a winner somewhere on the board"
+     (should= true
+       (winner? "O" "X" ["O" "X" "X"
+                         "X" "O" "O"
+                         "X" "X" "X"])))
+
+  (it "returns false if there is no winner and board is full"
+     (should= false
+       (winner? "O" "X" ["O" "X" "X"
+                         "X" "O" "O"
+                         "X" "O" "X"])))
+
+  (it "returns true if there is a winner and board is full"
+     (should= true
+       (winner? "O" "X" ["O" "X" "X"
+                         "X" "O" "O"
+                         "X" "X" "X"])))
  )

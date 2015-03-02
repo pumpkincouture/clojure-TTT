@@ -3,25 +3,25 @@
   (:require [clojure-tic-tac-toe.ui :as ui])
   (:require [clojure-tic-tac-toe.ai :as ai]))
 
-(defn print-stuff [board human-piece ai-piece]
-  (ui/print-board board)
-  (println human-piece)
-  (println ai-piece))
+(defn capture-valid-move []
+  (try Integer/parseInt (read-line))
+    (catch NumberFormatExeption e nil))
 
-(defn capture-move []
-  (- (Integer. (read-line)) 1))
-
-(defn get-human-move [human-piece board]
-  (ui/prompt-for-move human-piece)
+(defn get-move [player-piece board]
   (let [input (capture-move)]
      (if (board/open-and-valid? input board)
        (board/place-move input human-piece board)
-       (do
-         (println "nope")
-         (println "it's not a number")))))
+       (recur board human-piece))))
 
-(defn run-game []
-  (ui/print-welcome)
+(defn get-human-move [human-piece board]
+  (ui/prompt-for-move human-piece)
+  (let [ input (capture-valid-move)]
+    (if (and input (include? (range 1 10) input))
+      (input - 1)
+      (recur board human-piece))))
+
+(defn play-game-loop)
+(defn start-game []
   (let [ _(ui/prompt-for-piece)
            human-piece (read-line)
          _(ui/prompt-for-ai-piece)
@@ -30,5 +30,5 @@
            board (vec (range 1 (inc size)))
          ]
     (ui/print-board board)
-    (get-human-move human-piece board)
+    (ui/print-board (get-human-move human-piece board))
     ))
