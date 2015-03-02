@@ -33,15 +33,15 @@
        (ui/print-result current-mark next-mark board)
        (do
          (let [move (get-move board current-type current-mark next-mark)]
-           (let [updated-board (board/place-move move current-mark board)]
-              (ui/print-board updated-board)
+         (let [updated-board (board/place-move move current-mark board)]
+           (ui/print-board updated-board)
            (recur next-mark current-mark next-type current-type updated-board)))))))
 
 (defn start-game
   ([]
    (let [ _(ui/prompt-for-piece)
            human-piece (read-line)
-         _(ui/prompt-for-ai-piece)
+          _(ui/prompt-for-ai-piece)
            ai-piece (read-line)
            size 9
            board (vec (range 1 (inc size)))

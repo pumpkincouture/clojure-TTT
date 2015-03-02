@@ -220,4 +220,10 @@
        (game-over? "O" "X" [1  "X" "X"
                            "X" "O" "O"
                            "X" "O" "X"])))
+
+  (it "returns false if no winner or board is full"
+     (should= false
+       (game-over? "O" "X" [ 1  "X" "X"
+                            "X" "O" "O"
+                            "X"  8 "X"])))
  )

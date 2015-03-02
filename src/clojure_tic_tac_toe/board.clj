@@ -79,5 +79,14 @@
     (or (some #(% piece-one cells) [any-row-winner? any-column-winner? any-diag-winner?]) (some #(% piece-two cells) [any-row-winner? any-column-winner? any-diag-winner?])) true
   :else false))
 
+(defn tie? [cells piece-one piece-two]
+    (let [checked-spaces (find-open-spaces cells)
+          cells  cells]
+     (cond
+      (and (every? false? checked-spaces) (not (winner? piece-one piece-two cells)) (not (winner? piece-one piece-two cells))) true
+     :else false)))
+
 (defn game-over? [piece-one piece-two cells]
-  (or (winner? piece-one piece-two cells) (full? 9 cells)))
+  (cond
+    (or (= true (winner? piece-one piece-two cells)) (= true (tie? cells piece-one piece-two))) true
+    :else false))
