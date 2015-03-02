@@ -80,4 +80,4 @@
   :else false))
 
 (defn game-over? [piece-one piece-two cells]
-  boolean (or (winner? piece-one piece-two cells) (full? 9 cells)))
+  (or (winner? piece-one piece-two cells) (full? 9 cells)))

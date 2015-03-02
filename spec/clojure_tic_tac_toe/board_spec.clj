@@ -155,15 +155,28 @@
                                  "O" "O" "X"
                                  "X" "O" "X"])))
 
-  (it "returns nil if there is a winner in a row"
+  (it "returns nil if no row winner"
      (should= nil
        (any-row-winner? "X" ["X" "O" "X"
                              "O" "O" "X"
                              "X" "O" "X"])))
 
+  (it "returns true if row winner"
+     (should= true
+       (any-row-winner? "O" ["X" "O" "X"
+                             "O" "O" "O"
+                             "X" "O" "X"])))
+
   (it "returns true if there is a winner in a column"
      (should= true
        (any-column-winner? "O" ["X" "O" "X"
+                                "O" "O" "X"
+                                "X" "O" "X"])))
+
+
+  (it "returns nil if no winner in a column"
+     (should= nil
+       (any-column-winner? "X" ["X" "O" "O"
                                 "O" "O" "X"
                                 "X" "O" "X"])))
 
@@ -173,21 +186,34 @@
                               "O" "O" "X"
                               "X" "O" "O"])))
 
+  (it "returns nil if no winner in diagonal"
+     (should= nil
+       (any-diag-winner? "X" ["O" "X" "X"
+                              "O" "O" "X"
+                              "X" "O" "O"])))
+
   (it "returns true if there is a winner somewhere on the board"
      (should= true
        (winner? "O" "X" ["O" "X" "X"
                          "X" "O" "O"
                          "X" "X" "X"])))
 
-  (it "returns false if there is no winner and board is full"
+  (it "returns false if there is no winner on the board"
      (should= false
        (winner? "O" "X" ["O" "X" "X"
                          "X" "O" "O"
                          "X" "O" "X"])))
 
-  (it "returns true if there is a winner and board is full"
+  (it "returns true if winner or board is full"
      (should= true
-       (winner? "O" "X" ["O" "X" "X"
-                         "X" "O" "O"
-                         "X" "X" "X"])))
+       (game-over? "O" "X" ["O" "X" "X"
+                            "X" "O" "O"
+                            "X" "O" "X"])))
+
+
+  (it "returns false if no winner or board is not full"
+     (should= false
+       (game-over? "O" "X" [1  "X" "X"
+                           "X" "O" "O"
+                           "X" "O" "X"])))
  )
