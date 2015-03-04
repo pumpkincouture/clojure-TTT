@@ -1,20 +1,27 @@
-(ns clojure-tic-tac-toe.board)
+(ns clojure-tic-tac-toe.board
+  (:require [clojure.math.numeric-tower :as math]))
 
 (defn make-new [size]
   (vec (range 1 (inc size))))
 
-(defn full? [size cells]
-  (= size (count (filter string? cells))))
+(defn size? [cells]
+  (count cells))
+
+(defn square-root? [cells]
+  (math/sqrt (size? cells)))
+
+(defn full? [cells]
+  (= (size? cells) (count (filter string? cells))))
 
 (defn open-space? [index cells]
-  (if (number? (get cells index)) true false))
+  (number? (get cells index)))
 
-(defn valid-space? [index]
-  (<= index 9))
+(defn valid-space? [index cells]
+  (<= index (size? cells)))
 
 (defn open-and-valid? [index cells]
   (cond
-    (and (open-space? index cells) (valid-space? index)) true
+    (and (open-space? index cells) (valid-space? index cells)) true
     :else false))
 
 (defn find-open-spaces [cells]
@@ -31,29 +38,19 @@
     (and (not (= player-piece cell)) (not (number? cell))))
       cells) 0))
 
-(defn winner-row-one? [player-piece cells]
-  (every? #{player-piece} (subvec cells 0 2)))
+(defn row-winner? [player-piece cells]
+  (loop [start (- (size? cells) (size? cells)) end (+ 2 (- (size? cells) (size? cells)))]
+     (cond
+        (every? #{player-piece} (subvec cells start end)) true
+        (= end (- (size? cells) 1)) false
+        :else (recur (+ start 3) (+ end 3)))))
 
-(defn winner-row-two? [player-piece cells]
-  (every? #{player-piece} (subvec cells 3 5)))
-
-(defn winner-row-three? [player-piece cells]
-  (every? #{player-piece} (subvec cells 6 8)))
-
-(defn winner-column-one? [player-piece cells]
-  (cond
-    (and (= player-piece (get cells 0)) (= player-piece (get cells 3)) (= player-piece (get cells 6))) true
-    :else false))
-
-(defn winner-column-two? [player-piece cells]
-  (cond
-    (and (= player-piece (get cells 1)) (= player-piece (get cells 4)) (= player-piece (get cells 7))) true
-    :else false))
-
-(defn winner-column-three? [player-piece cells]
-  (cond
-    (and (= player-piece (get cells 2)) (= player-piece (get cells 5)) (= player-piece (get cells 8))) true
-    :else false))
+(defn column-winner? [player-piece cells]
+  (loop [start (- (size? cells) (size? cells)) middle (square-root? cells) end (* (square-root? cells) 2) ]
+    (cond
+      (and (= player-piece (get cells start)) (= player-piece (get cells middle)) (= player-piece (get cells end))) true
+      (= end (- (size? cells) 1)) false
+      :else (recur (inc start) (inc middle) (inc end)))))
 
 (defn winner-diagonal-one? [player-piece cells]
   (cond
@@ -65,18 +62,12 @@
     (and (= player-piece (get cells 2)) (= player-piece (get cells 4)) (= player-piece (get cells 6))) true
     :else false))
 
-(defn any-row-winner? [player-piece cells]
-  (some #(% player-piece cells) [winner-row-one? winner-row-two? winner-row-three?]))
-
-(defn any-column-winner? [player-piece cells]
-  (some #(% player-piece cells) [winner-column-one? winner-column-two? winner-column-three?]))
-
 (defn any-diag-winner? [player-piece cells]
   (some #(% player-piece cells) [winner-diagonal-one? winner-diagonal-two?]))
 
 (defn winner? [piece-one piece-two cells]
   (cond
-    (or (some #(% piece-one cells) [any-row-winner? any-column-winner? any-diag-winner?]) (some #(% piece-two cells) [any-row-winner? any-column-winner? any-diag-winner?])) true
+    (or (some #(% piece-one cells) [row-winner? column-winner? any-diag-winner?]) (some #(% piece-two cells) [row-winner? column-winner? any-diag-winner?])) true
   :else false))
 
 (defn tie? [cells piece-one piece-two]
