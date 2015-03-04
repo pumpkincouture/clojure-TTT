@@ -40,10 +40,17 @@
 
 (defn row-winner? [player-piece cells]
   (loop [start (- (size? cells) (size? cells)) end (+ 2 (- (size? cells) (size? cells)))]
-     (cond
-        (every? #{player-piece} (subvec cells start end)) true
-        (= end (- (size? cells) 1)) false
-        :else (recur (+ start 3) (+ end 3)))))
+    (cond
+      (every? #{player-piece} (subvec cells start end)) true
+      (= end (- (size? cells) 1)) false
+      :else (recur (+ start 3) (+ end 3)))))
+
+(defn diagonal-winner? [player-piece cells]
+  (loop [start (- (size? cells) (size? cells)) middle (+ (square-root? cells) 1) end (- (size? cells) 1)]
+    (cond
+      (and (= player-piece (get cells start)) (= player-piece (get cells middle)) (= player-piece (get cells end))) true
+      (= end (- (size? cells) 3)) false
+      :else (recur (+ start 2) middle (- end 2)))))
 
 (defn column-winner? [player-piece cells]
   (loop [start (- (size? cells) (size? cells)) middle (square-root? cells) end (* (square-root? cells) 2) ]
@@ -52,30 +59,16 @@
       (= end (- (size? cells) 1)) false
       :else (recur (inc start) (inc middle) (inc end)))))
 
-(defn winner-diagonal-one? [player-piece cells]
-  (cond
-    (and (= player-piece (get cells 0)) (= player-piece (get cells 4)) (= player-piece (get cells 8))) true
-    :else false))
-
-(defn winner-diagonal-two? [player-piece cells]
-  (cond
-    (and (= player-piece (get cells 2)) (= player-piece (get cells 4)) (= player-piece (get cells 6))) true
-    :else false))
-
-(defn any-diag-winner? [player-piece cells]
-  (some #(% player-piece cells) [winner-diagonal-one? winner-diagonal-two?]))
-
 (defn winner? [piece-one piece-two cells]
   (cond
-    (or (some #(% piece-one cells) [row-winner? column-winner? any-diag-winner?]) (some #(% piece-two cells) [row-winner? column-winner? any-diag-winner?])) true
-  :else false))
+    (or (some #(% piece-one cells) [row-winner? column-winner? diagonal-winner?]) (some #(% piece-two cells) [row-winner? column-winner? diagonal-winner?])) true
+     :else false))
 
 (defn tie? [cells piece-one piece-two]
-    (let [checked-spaces (find-open-spaces cells)
-          cells  cells]
+  (let [open-spaces (find-open-spaces cells) cells cells]
      (cond
-      (and (every? false? checked-spaces) (not (winner? piece-one piece-two cells)) (not (winner? piece-one piece-two cells))) true
-     :else false)))
+       (and (empty? open-spaces) (not (winner? piece-one piece-two cells)) (not (winner? piece-one piece-two cells))) true
+       :else false)))
 
 (defn game-over? [piece-one piece-two cells]
   (cond

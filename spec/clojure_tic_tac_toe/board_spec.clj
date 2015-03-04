@@ -105,27 +105,27 @@
 
   (it "returns true if winner in first diagonal"
     (should= true
-      (winner-diagonal-one? "O" ["O" "X" "X"
-                                 "X" "O" "O"
-                                 "X" "X" "O"])))
+      (diagonal-winner? "O" ["O" "X" "X"
+                             "X" "O" "O"
+                             "X" "X" "O"])))
 
   (it "returns false if no winner in first diagonal"
     (should= false
-      (winner-diagonal-one? "X" ["O" "X" "X"
-                                 "X" "O" "O"
-                                 "X" "X" "O"])))
+      (diagonal-winner? "X" ["O" "X" "X"
+                             "X" "O" "O"
+                             "X" "X" "O"])))
 
   (it "returns true if winner in second diagonal"
     (should= true
-      (winner-diagonal-two? "X" ["O" "O" "X"
-                                 "O" "X" "O"
-                                 "X" "O" "X"])))
+      (diagonal-winner? "X" ["O" "O" "X"
+                             "O" "X" "O"
+                             "X" "O" "X"])))
 
   (it "returns false if no winner in second diagonal"
     (should= false
-      (winner-diagonal-two? "O" ["O" "O" "X"
-                                 "O" "X" "O"
-                                 "X" "O" "X"])))
+      (diagonal-winner? "O" ["O" "O" "X"
+                             "O" "X" "O"
+                             "X" "O" "X"])))
 
   (it "returns true if winner in first column"
     (should= true
@@ -151,18 +151,6 @@
                            "O" "O" "X"
                            "X" "O" "X"])))
 
-  (it "returns true if there is a winner in a diagonal"
-     (should= true
-       (any-diag-winner? "O" ["O" "X" "X"
-                              "O" "O" "X"
-                              "X" "O" "O"])))
-
-  (it "returns nil if no winner in diagonal"
-     (should= nil
-       (any-diag-winner? "X" ["O" "X" "X"
-                              "O" "O" "X"
-                              "X" "O" "O"])))
-
   (it "returns true if there is a winner somewhere on the board"
      (should= true
        (winner? "O" "X" ["O" "X" "X"
@@ -175,22 +163,33 @@
                          "X" "O" "O"
                          "X" "O" "X"])))
 
-  (it "returns true if winner or board is full"
+  (it "returns true if there is a tie on the board when the boad is full"
+      (should= true
+       (tie? ["O" "X" "X"
+              "X" "O" "O"
+              "X" "O" "X"]"O" "X")))
+
+  (it "returns false if there is a winner on the board when the boad is full"
+      (should= false
+       (tie? ["O" "X" "X"
+              "O" "O" "O"
+              "X" "O" "X"]"O" "X")))
+
+  (it "returns true if board is full and there is no winner"
      (should= true
        (game-over? "O" "X" ["O" "X" "X"
                             "X" "O" "O"
                             "X" "O" "X"])))
 
-
-  (it "returns false if no winner or board is not full"
+  (it "returns false if no winner and board is not full"
      (should= false
        (game-over? "O" "X" [1  "X" "X"
                            "X" "O" "O"
                            "X" "O" "X"])))
 
-  (it "returns false if no winner or board is full"
-     (should= false
-       (game-over? "O" "X" [ 1  "X" "X"
+  (it "returns true if there is a winner"
+     (should= true
+       (game-over? "O" "X" ["X" "X" "X"
                             "X" "O" "O"
-                            "X"  8 "X"])))
+                            "X"  8   9])))
  )
