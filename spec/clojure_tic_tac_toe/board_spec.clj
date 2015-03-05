@@ -79,6 +79,12 @@
                                  4  "X" "O"
                                 "O" "X" "O"])))
 
+  (it "returns false if no row winner on the board"
+     (should= false
+       (row-winner? "X" ["X" "O" "O"
+                         "O" "X" "X"
+                         "X" "X" "O"])))
+
   (it "returns false if no winners in any rows"
      (should= false
       (row-winner? "X" ["X" "O" "X"
@@ -86,7 +92,7 @@
                         "O" "X" "O"])))
 
   (it "returns true if there is a winner in the first row"
-     (should= true
+     (should= false
       (row-winner? "X" ["O" "O" "O"
                         "X" "X" "O"
                         "O" "X" "O"])))
@@ -99,9 +105,15 @@
 
   (it "returns true if there is a winner in the third row"
     (should= true
-      (row-winner? "O" [ 1  "X" "X"
+      (row-winner? "O"     [ 1  "X" "X"
                              4  "X" "O"
                             "O" "O" "O"])))
+
+  (it "returns false if no diagonal winner on the board"
+     (should= false
+       (diagonal-winner? "X" ["X" "O" "O"
+                              "O" "X" "X"
+                              "X" "X" "O"])))
 
   (it "returns true if winner in first diagonal"
     (should= true
@@ -162,6 +174,12 @@
        (winner? "O" "X" ["O" "X" "X"
                          "X" "O" "O"
                          "X" "O" "X"])))
+
+  (it "returns false if no winner on the board"
+     (should= false
+       (winner? "O" "X" ["X" "O" "O"
+                         "O" "X" "X"
+                         "X" "X" "O"])))
 
   (it "returns false if there is a winner on the board"
       (should= false

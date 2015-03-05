@@ -16,9 +16,7 @@
                   "O" "X" "O"])))
 
   (it "generates an end state board with a winner"
-    (should= ["O" 2 3
-              "O" "X" "O"
-              "O" "X" 9]
+    (should= 10
       (generate-board   [1   2   3
                         "O" "X" "O"
                         "O" "X"  9] 0 "O")))

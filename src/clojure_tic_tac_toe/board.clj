@@ -41,7 +41,7 @@
 (defn row-winner? [player-piece cells]
   (loop [start (- (size? cells) (size? cells)) end (+ 2 (- (size? cells) (size? cells)))]
     (cond
-      (every? #{player-piece} (subvec cells start end)) true
+      (every? #{player-piece} (subvec cells start (+ end 1))) true
       (= end (- (size? cells) 1)) false
       :else (recur (+ start 3) (+ end 3)))))
 
