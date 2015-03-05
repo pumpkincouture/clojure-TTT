@@ -36,4 +36,22 @@
         (generate-board ["X"  2  "O"
                          "O" "X" "X"
                          "X"  8  "O"] 0 "O")))
+
+  (it "generates a score of 10 for computer win"
+      (should= 10
+        (score-board ["T"  2  "T"
+                      "T" "H" "H"
+                      "T"  8  "T"] "T" "H" 0)))
+
+  (it "generates a score of -10 for opponent win"
+      (should= -10
+        (score-board ["H"  2  "T"
+                      "H" "T" "H"
+                      "H"  8  "T"] "T" "H" 0)))
+
+  (it "generates a score of 0 for tie board"
+      (should= 0
+        (score-board ["T" "H" "T"
+                      "H" "T" "H"
+                      "H" "T" "H"] "T" "H" 0)))
 )

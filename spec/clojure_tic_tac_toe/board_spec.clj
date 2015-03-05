@@ -152,7 +152,7 @@
                            "X" "O" "X"])))
 
   (it "returns true if there is a winner somewhere on the board"
-     (should= true
+     (should= "X"
        (winner? "O" "X" ["O" "X" "X"
                          "X" "O" "O"
                          "X" "X" "X"])))
@@ -162,6 +162,12 @@
        (winner? "O" "X" ["O" "X" "X"
                          "X" "O" "O"
                          "X" "O" "X"])))
+
+  (it "returns false if there is a winner on the board"
+      (should= false
+       (tie? ["X"  2  "X"
+              "X" "O" "O"
+              "X"  8  "X"]"O" "X")))
 
   (it "returns true if there is a tie on the board when the boad is full"
       (should= true

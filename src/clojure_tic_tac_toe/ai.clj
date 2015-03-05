@@ -4,6 +4,12 @@
 (defn- switch-players [player-piece cells]
   (board/find-opponent-piece player-piece cells))
 
+(defn score-board [cells player-piece opponent-piece depth]
+  (cond
+    (= (board/winner? player-piece opponent-piece cells) player-piece) (- 10 depth)
+    (= (board/winner? player-piece opponent-piece cells) opponent-piece) (- depth 10)
+    :else 0))
+
 (defn generate-board
   ([cells depth player-piece]
    (let [depth depth

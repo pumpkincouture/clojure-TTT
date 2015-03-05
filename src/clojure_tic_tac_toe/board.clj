@@ -61,7 +61,8 @@
 
 (defn winner? [piece-one piece-two cells]
   (cond
-    (or (some #(% piece-one cells) [row-winner? column-winner? diagonal-winner?]) (some #(% piece-two cells) [row-winner? column-winner? diagonal-winner?])) true
+    (some #(% piece-one cells) [row-winner? column-winner? diagonal-winner?]) piece-one
+    (some #(% piece-two cells) [row-winner? column-winner? diagonal-winner?]) piece-two
      :else false))
 
 (defn tie? [cells piece-one piece-two]
@@ -72,5 +73,5 @@
 
 (defn game-over? [piece-one piece-two cells]
   (cond
-    (or (= true (winner? piece-one piece-two cells)) (= true (tie? cells piece-one piece-two))) true
+    (or (string? (winner? piece-one piece-two cells)) (= true (tie? cells piece-one piece-two))) true
     :else false))
