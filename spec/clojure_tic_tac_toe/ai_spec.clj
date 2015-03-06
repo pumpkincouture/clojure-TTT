@@ -76,7 +76,7 @@
                    "X"   8   9] 0 "O" "X")))
 
   (it "returns piece to win in next move"
-      (should= 3
+      (should= 9
         (get-move ["X"  "X"  3
                    "O"  "O" "X"
                    "O"  "O"  9] 0 "O" "X")))
