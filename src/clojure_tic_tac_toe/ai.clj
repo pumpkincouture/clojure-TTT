@@ -5,12 +5,6 @@
   (board/find-opponent-piece player-piece cells))
 
 (defn score-board [cells player-piece opponent-piece depth]
-  (println cells)
-  (println depth "depth")
-  (println player-piece "player piece")
-  (println opponent-piece "opponent piece")
-  (println (= (board/winner? player-piece opponent-piece cells) player-piece))
-  (println (= (board/winner? player-piece opponent-piece cells) opponent-piece))
   (cond
     (= (board/winner? player-piece opponent-piece cells) player-piece) (- 10 depth)
     (= (board/winner? player-piece opponent-piece cells) opponent-piece) (- depth 10)
@@ -22,7 +16,7 @@
          depth depth
          open-space (- (nth (board/find-open-spaces cells) 0) 1)
          depth depth
-         player-piece player-piece
+         player-piece (switch-players player-piece cells)
          cells cells
          ]
      (generate-board computer-piece open-space depth player-piece cells)))
@@ -41,17 +35,20 @@
          (score-board updated-board computer-piece opponent-piece depth)
       :else (recur computer-piece (- (nth (board/find-open-spaces updated-board) 0) 1) (inc depth) (switch-players player-piece cells) updated-board)))))
 
+(defn update-scores-list [move score]
+  ;{move score}
+  ;(zipmap [move] [score])
+  [move score]
+  )
+
 (defn ai-move [cells depth player-piece]
-  (loop [index 0 open-cell (- (nth (board/find-open-spaces cells) index) 1) game-piece player-piece depth depth]
-    (let [updated-board (board/place-move open-cell game-piece cells)
-          other-piece (switch-players player-piece updated-board)
-          ]
-      (println player-piece)
-      (println updated-board)
-      (println open-cell))
-    (cond
-      (= depth 4) true
-      :else (recur (inc index) (- (nth (board/find-open-spaces cells) index) 1) (switch-players player-piece cells) (inc depth)))))
+    (for [open-space (board/find-open-spaces cells)]
+      (let [space-index  (- open-space 1)
+            updated-board (board/place-move space-index player-piece cells)]
+        (update-scores-list open-space (generate-board updated-board depth player-piece)))))
+
+(defn get-move [cells depth player-piece]
+  (first (first (sort-by second > (ai-move cells depth player-piece)))))
 
 (defn pick-move [cells]
   (- (rand-nth (board/find-open-spaces cells)) 1))
