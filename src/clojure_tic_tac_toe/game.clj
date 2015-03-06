@@ -22,7 +22,7 @@
 
 (defn get-move [board current-type current-mark next-mark]
   (if (= current-type "ai")
-      (ai/get-move board 0 current-mark next-mark)
+      (dec (ai/get-move board 0 current-mark next-mark))
       (get-human-move board current-mark)))
 
 (defn game-loop [first-piece second-piece current-type next-type board]
@@ -36,6 +36,7 @@
           (do
             (let [move (get-move board current-type first-piece second-piece)]
             (let [updated-board (board/place-move move first-piece board)]
+            (ui/print-choice first-piece move)
             (ui/print-board updated-board)
             (recur second-piece first-piece next-type current-type updated-board)))))))
 

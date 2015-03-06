@@ -18,9 +18,9 @@
     (should= "Player X , please choose a number :\n"
       (with-out-str (prompt-for-move "X"))))
 
-  (it "should print out what the player has chosen after they made a move"
-    (should= "Player Y chose space 6\n"
-      (with-out-str (print-choice "Y" "6"))))
+  (it "should print out the board representation of choice"
+    (should= "Player Y chose space 7\n"
+      (with-out-str (print-choice "Y" 6))))
 
   (it "should print out game winner"
     (should= "O wins!\n"

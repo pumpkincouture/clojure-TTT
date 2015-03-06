@@ -27,6 +27,6 @@
     (first (first (sort-by second > min-scores)))))
 
 (defn get-move [cells depth player-piece opponent-piece]
-  (dec (ai-move cells depth player-piece opponent-piece)))
+  (ai-move cells depth player-piece opponent-piece))
 
 ;(first (first (sort-by second < (ai-move cells depth player-piece opponent-piece)))))

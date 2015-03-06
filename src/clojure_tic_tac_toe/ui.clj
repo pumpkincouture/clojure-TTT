@@ -25,7 +25,7 @@
   (println "Player" player-piece ", please choose a number :"))
 
 (defn print-choice [player-piece choice]
-  (println "Player" player-piece "chose space" choice))
+  (println "Player" player-piece "chose space" (inc choice)))
 
 (defn print-winner [player-piece]
   (println player-piece "wins!"))
