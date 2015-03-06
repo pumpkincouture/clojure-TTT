@@ -19,6 +19,10 @@
     (should= true
       (open-space? 4, [1 2 3 4 5 6 7 8 9])))
 
+  (it "checks if a false input is valid"
+    (should= false
+      (open-space? false, [1 2 3 4 5 6 7 8 9])))
+
   (it "returns true if board is full"
     (should= true
       (full? ["X" "O" "X" "O" "X" "O" "O" "X" "O"])))

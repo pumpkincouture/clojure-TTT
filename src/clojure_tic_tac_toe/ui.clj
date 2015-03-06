@@ -34,9 +34,10 @@
  (println "Cat's game!"))
 
 (defn print-result [piece-one piece-two board]
-  (if (= true (board/winner? piece-one piece-two board))
-      (println "Game over!")
-      (print-tie-game)))
+  (let [winner-string (board/winner? piece-one piece-two board)]
+  (cond
+    (string? winner-string) (print-winner winner-string)
+    :else (print-tie-game))))
 
 (defn print-error []
   (println "That is not a valid choice, please try again!"))

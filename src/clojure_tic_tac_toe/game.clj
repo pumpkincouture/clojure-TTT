@@ -4,13 +4,15 @@
         (:require [clojure-tic-tac-toe.ai :as ai])
         (:gen-class :main true))
 
-(defn capture-valid-move []
-      (try (Integer/parseInt (read-line))
-                 (catch NumberFormatException e nil)))
+(defn valid-input? [input]
+  (cond
+    (integer? (read-string input)) (dec (Integer/parseInt input))
+    :else false))
 
 (defn get-human-move [board player-piece]
    (ui/prompt-for-move player-piece)
-   (let [input (capture-valid-move)]
+   (let [choice (read-line)
+         input (valid-input? choice)]
    (if (board/open-and-valid? input board)
       input
        (do
@@ -20,25 +22,24 @@
 
 (defn get-move [board current-type current-mark next-mark]
   (if (= current-type "ai")
-      (ai/pick-move board)
+      (ai/get-move board 0 current-mark next-mark)
       (get-human-move board current-mark)))
 
-(defn game-loop [current-mark next-mark current-type next-type board]
-   (loop [current-mark current-mark
-          next-mark     next-mark
+(defn game-loop [first-piece second-piece current-type next-type board]
+   (loop [first-piece  first-piece
+          second-piece  second-piece
           current-type current-type
           next-type next-type
-          board       board]
-    (if (board/game-over? next-mark current-mark board)
-       (ui/print-result current-mark next-mark board)
+          board board]
+    (if (board/game-over? first-piece second-piece board)
+       (ui/print-result first-piece second-piece board)
           (do
-            (let [move (get-move board current-type current-mark next-mark)]
-            (let [updated-board (board/place-move move current-mark board)]
+            (let [move (get-move board current-type first-piece second-piece)]
+            (let [updated-board (board/place-move move first-piece board)]
             (ui/print-board updated-board)
-            (recur next-mark current-mark next-type current-type updated-board)))))))
+            (recur second-piece first-piece next-type current-type updated-board)))))))
 
-(defn start-game
-  ([]
+(defn start-game []
    (let [ _(ui/prompt-for-piece)
           human-piece (read-line)
           _(ui/prompt-for-ai-piece)
@@ -47,7 +48,7 @@
           board (vec (range 1 (inc size)))
          ]
   (ui/print-board board)
-  (game-loop human-piece ai-piece "human" "ai" board))))
+  (game-loop human-piece ai-piece "human" "ai" board)))
 
 (defn -main []
   (ui/print-welcome)
