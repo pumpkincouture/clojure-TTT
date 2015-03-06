@@ -10,45 +10,27 @@
     (= (board/winner? player-piece opponent-piece cells) opponent-piece) (- depth 10)
     :else 0))
 
-(defn generate-board
-  ([cells depth player-piece]
-   (let [computer-piece player-piece
-         depth depth
-         open-space (- (nth (board/find-open-spaces cells) 0) 1)
-         depth depth
-         player-piece (switch-players player-piece cells)
-         cells cells
-         ]
-     (generate-board computer-piece open-space depth player-piece cells)))
+(defn generate-boards [cells player-piece opponent-piece depth]
+  (let [indexed-spaces (map dec (board/find-open-spaces cells))]
+   (map (fn [space] (board/place-move space player-piece cells)) indexed-spaces)))
 
-  ([computer-piece open-space depth player-piece cells]
-  (let [computer-piece computer-piece
-        open-space open-space
-        depth depth
-        player-piece player-piece
-        opponent-piece (switch-players computer-piece cells)
-        updated-board (board/place-move open-space player-piece cells)
-        ]
-    (cond
-      (= depth 5) true
-      (board/game-over? player-piece opponent-piece updated-board)
-         (score-board updated-board computer-piece opponent-piece depth)
-      :else (recur computer-piece (- (nth (board/find-open-spaces updated-board) 0) 1) (inc depth) (switch-players player-piece cells) updated-board)))))
+(defn get-scores [cells player-piece opponent-piece depth]
+ (map (fn [cells] (score-board cells player-piece opponent-piece depth)) (generate-boards cells player-piece opponent-piece depth)))
 
-(defn update-scores-list [move score]
-  ;{move score}
-  ;(zipmap [move] [score])
-  [move score]
-  )
+(defn update-min-scores-list [cells depth player-piece opponent-piece]
+  (zipmap (board/find-open-spaces cells) (get-scores cells player-piece opponent-piece depth)))
 
-(defn ai-move [cells depth player-piece]
-    (for [open-space (board/find-open-spaces cells)]
-      (let [space-index  (- open-space 1)
-            updated-board (board/place-move space-index player-piece cells)]
-        (update-scores-list open-space (generate-board updated-board depth player-piece)))))
+(defn ai-move [cells depth player-piece opponent-piece]
 
-(defn get-move [cells depth player-piece]
-  (first (first (sort-by second > (ai-move cells depth player-piece)))))
+  (let [indexed-spaces (map dec (board/find-open-spaces cells))
 
-(defn pick-move [cells]
-  (- (rand-nth (board/find-open-spaces cells)) 1))
+           ; updated-board-with-comp-piece (board/place-move space-index player-piece cells)
+           min-scores
+          ; updated-board-with-opponent-piece (board/place-move space-index opponent-piece cells)]
+       ; (update-scores-list open-space (generate-board updated-board-with-comp-piece (inc depth) player-piece))
+        (update-min-scores-list cells depth opponent-piece player-piece)]
+   (first (first (sort-by val > min-scores)))))
+
+(defn get-move [cells depth player-piece opponent-piece]
+  (ai-move cells depth player-piece opponent-piece))
+;(first (first (sort-by second < (ai-move cells depth player-piece opponent-piece)))))

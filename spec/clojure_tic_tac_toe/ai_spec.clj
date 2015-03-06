@@ -3,18 +3,6 @@
   (:use clojure-tic-tac-toe.ai))
 
 (describe "AI"
-  (it "picks a random move given a 3x3 board"
-    (should= 7
-      (pick-move ["X" "X" "X"
-                  "O" "X" "O"
-                  "O" "X" 8])))
-
-  (it "picks a random move given a 3x3 board"
-    (should= 1
-      (pick-move ["X" "X" 2
-                  "O" "X" "O"
-                  "O" "X" "O"])))
-
   (it "generates a score of 10 for computer win"
       (should= 10
         (score-board ["T"  2  "T"
@@ -55,11 +43,47 @@
       (should= 6
         (get-move ["X"  2  "O"
                    "O" "X"  6
-                   "X"  8  "O"] 0 "O")))
+                   "X"  8  "O"] 0 "O" "X")))
 
   (it "returns move to block opponent"
       (should= 9
         (get-move ["X"  2   3
                     4  "X"  6
-                   "O"  8   9] 0 "O")))
+                   "O"  8   9] 0 "O" "X")))
+
+  (it "blocks opponent in the bottom right corner"
+      (should= 9
+        (get-move ["X" "O"  3
+                    4  "X"  6
+                   "O"  8   9] 0 "O" "X")))
+
+  (it "blocks opponent in top right corner"
+      (should= 3
+        (get-move ["X" "X"  3
+                    4   5   6
+                   "O"  8   9] 0 "O" "X")))
+
+  (it "blocks opponent in the bottom left corner"
+      (should= 7
+        (get-move [ 1  "O" "X"
+                    4  "X"  6
+                    7   8   9] 0 "O" "X")))
+
+  (it "blocks opponent in the top left corner"
+      (should= 1
+        (get-move [ 1   "O" "X"
+                   "X"   5   6
+                   "X"   8   9] 0 "O" "X")))
+
+  (it "returns piece to win in next move"
+      (should= 3
+        (get-move ["X"  "X"  3
+                   "O"  "O" "X"
+                   "O"  "O"  9] 0 "O" "X")))
+
+  (it "returns winning move if five spaces left"
+      (should= 8
+        (get-move ["X"  "O"  3
+                   "X"  "O"  6
+                    7    8   9] 0 "O" "X")))
 )
