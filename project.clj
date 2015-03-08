@@ -8,5 +8,5 @@
   :profiles {:dev {:dependencies [[speclj "3.1.0"]]}}
   :plugins [[speclj "3.1.0"]]
   :test-paths ["spec"]
-  :main clojure-tic-tac-toe.game
+  :main clojure-tic-tac-toe.core
   :java-source-path "src/")

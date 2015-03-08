@@ -1,8 +1,7 @@
 (ns clojure-tic-tac-toe.game
     (:require [clojure-tic-tac-toe.board :as board])
       (:require [clojure-tic-tac-toe.ui :as ui])
-        (:require [clojure-tic-tac-toe.ai :as ai])
-        (:gen-class :main true))
+        (:require [clojure-tic-tac-toe.ai :as ai]))
 
 (defn valid-input? [input]
   (cond
@@ -40,17 +39,24 @@
             (ui/print-board updated-board)
             (recur second-piece first-piece next-type current-type updated-board)))))))
 
-(defn start-game []
+(defn get-options []
    (let [ _(ui/prompt-for-piece)
           human-piece (read-line)
           _(ui/prompt-for-ai-piece)
           ai-piece (read-line)
           size 9
           board (vec (range 1 (inc size)))
+          first-player "human"
+          second-player "ai"
          ]
-  (ui/print-board board)
-  (game-loop human-piece ai-piece "human" "ai" board)))
+   (assoc {} :human-marker human-piece :ai-marker ai-piece :board board :first-type first-player :second-type second-player)))
 
-(defn -main []
-  (ui/print-welcome)
-  (start-game))
+(defn start-game [options]
+  (let [human-piece (get options :human-marker)
+        ai-piece (get options :ai-marker)
+        board (get options :board)
+        first-player-type (get options :first-type)
+        second-player-type (get options :second-type)
+       ]
+  (ui/print-board board)
+  (game-loop human-piece ai-piece first-player-type second-player-type board)))
