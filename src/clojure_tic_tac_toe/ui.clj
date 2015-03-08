@@ -3,7 +3,7 @@
     [clojure-tic-tac-toe.board :as board]))
 
 (defn print-welcome []
- (println "Welcome to Tic Tac Toe! Board is index based, when choosing a piece press 0 for 1, 1 for 2, etc"))
+ (println "Welcome to Tic Tac Toe! Please indicate your choice with a number. "))
 
 (defn prompt-for-piece []
   (println "Human, please choose your game piece :"))

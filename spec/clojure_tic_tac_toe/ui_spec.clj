@@ -7,7 +7,7 @@
     (with-out-str (it)))
 
   (it "prints welcome to the game"
-    (should= "Welcome to Tic Tac Toe! Board is index based, when choosing a piece press 0 for 1, 1 for 2, etc\n"
+    (should= "Welcome to Tic Tac Toe! Please indicate your choice with a number. \n"
       (with-out-str (print-welcome))))
 
   (it "should print out a 3x3 board"
@@ -29,6 +29,20 @@
   (it "should print out cat's game if game is a tie"
     (should= "Cat's game!\n"
       (with-out-str (print-tie-game))))
+
+  (it "should print the winner of the game"
+    (should= "X wins!\n"
+      (with-out-str (print-result "X" "O"
+                             ["X" "X" "X"
+                              "O" "X" "O"
+                               7   8   9]))))
+
+  (it "should print a tie game message"
+    (should= "Cat's game!\n"
+      (with-out-str (print-result "X" "O"
+                             ["O" "X" "O"
+                              "O" "X" "X"
+                              "X" "O" "O"]))))
 
   (it "should print an error message if input invalid"
     (should= "That is not a valid choice, please try again!\n"

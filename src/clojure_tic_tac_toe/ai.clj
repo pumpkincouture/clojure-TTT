@@ -1,13 +1,16 @@
 (ns clojure-tic-tac-toe.ai
   (:require [clojure-tic-tac-toe.board :as board]))
 
+(def ^:const win 10)
+(def ^:const loss -10)
+
 (defn- switch-players [player-piece cells]
   (board/find-opponent-piece player-piece cells))
 
 (defn score-board [cells player-piece opponent-piece depth]
   (cond
-    (= (board/winner? player-piece opponent-piece cells) player-piece) (- 10 depth)
-    (= (board/winner? player-piece opponent-piece cells) opponent-piece) (- depth 10)
+    (= (board/winner? player-piece opponent-piece cells) player-piece) win
+    (= (board/winner? player-piece opponent-piece cells) opponent-piece) loss
     :else 0))
 
 (defn generate-boards [cells player-piece opponent-piece depth]
