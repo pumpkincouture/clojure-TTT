@@ -23,7 +23,6 @@
 
 (defn ai-move [cells depth player-piece opponent-piece]
   (let [indexed-spaces (map dec (board/find-open-spaces cells))
-        max-scores (update-scores-list cells (inc depth) player-piece opponent-piece)
         min-scores (update-scores-list cells (inc depth) opponent-piece player-piece)]
     (first (first (sort-by second > min-scores)))))
 

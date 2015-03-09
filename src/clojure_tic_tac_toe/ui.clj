@@ -12,13 +12,13 @@
   (println "Human, please pick your opponent's game piece :"))
 
 (defn print-board [board]
-  (prn "                 ")
+  (prn "-----------------")
   (prn (str "  " (board 0) "  |  " (board 1) "  |  " (board 2) "  "))
   (prn "-----------------")
   (prn (str "  " (board 3) "  |  " (board 4) "  |  " (board 5) "  "))
   (prn "-----------------")
   (prn (str "  " (board 6) "  |  " (board 7) "  |  " (board 8) "  "))
-  (prn "                 ")
+  (prn "-----------------")
 )
 
 (defn prompt-for-move [player-piece]

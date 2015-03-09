@@ -63,21 +63,27 @@
                     4  "X"  6
                     7   8   9] 0 "O" "X")))
 
-  (it "blocks opponent in the top left corner"
-      (should= 1
-        (get-move [ 1   "O" "X"
-                   "X"   5   6
-                   "X"   8   9] 0 "O" "X")))
-
   (it "blocks opponent in the next move"
       (should= 3
         (get-move ["X"  "X"  3
                    "O"  "O" "X"
                    "O"  "O"  9] 0 "O" "X")))
 
-  (it "returns best move if six spaces left"
-      (should= 8
+  (it "returns best move if seven spaces left"
+      (should= 9
         (get-move ["X"  "O"  3
-                    4   "O"  6
+                    4    5   6
                     7    8   9] 0 "O" "X")))
+
+  (it "returns best move if eight spaces left"
+      (should= 9
+        (get-move ["X"   2   3
+                    4    5   6
+                    7    8   9] 0 "O" "X")))
+
+  (it "returns win for itself"
+      (should= 9
+        (get-move ["X"   2   3
+                   "O"  "O" "X"
+                   "O"  "O"  9] 0 "O" "X")))
 )

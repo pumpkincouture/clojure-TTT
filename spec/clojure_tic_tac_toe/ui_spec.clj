@@ -11,7 +11,7 @@
       (with-out-str (print-welcome))))
 
   (it "should print out a 3x3 board"
-    (should="\"                 \"\n\"  1  |  2  |  3  \"\n\"-----------------\"\n\"  4  |  5  |  6  \"\n\"-----------------\"\n\"  7  |  8  |  9  \"\n\"                 \"\n"
+    (should="\"-----------------\"\n\"  1  |  2  |  3  \"\n\"-----------------\"\n\"  4  |  5  |  6  \"\n\"-----------------\"\n\"  7  |  8  |  9  \"\n\"-----------------\"\n"
       (with-out-str (print-board [1 2 3 4 5 6 7 8 9]))))
 
   (it "should prompt the X player for a move"

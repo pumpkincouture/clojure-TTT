@@ -19,7 +19,7 @@
      (should= 7
        (valid-input? "8")))
 
-  (it "should return a hash with game options"
+  (it "should return game options"
       (with-redefs [read-line (constantly "X")]
       (should= {:second-type "ai"
                 :first-type "human"
