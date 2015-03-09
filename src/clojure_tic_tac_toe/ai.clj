@@ -3,15 +3,13 @@
 
 (def ^:const win 10)
 (def ^:const loss -10)
-
-(defn- switch-players [player-piece cells]
-  (board/find-opponent-piece player-piece cells))
+(def ^:const tie 0)
 
 (defn score-board [cells player-piece opponent-piece depth]
   (cond
     (= (board/winner? player-piece opponent-piece cells) player-piece) win
     (= (board/winner? player-piece opponent-piece cells) opponent-piece) loss
-    :else 0))
+    :else tie))
 
 (defn generate-boards [cells player-piece opponent-piece depth]
   (let [indexed-spaces (map dec (board/find-open-spaces cells))]
@@ -31,5 +29,3 @@
 
 (defn get-move [cells depth player-piece opponent-piece]
   (ai-move cells depth player-piece opponent-piece))
-
-;(first (first (sort-by second < (ai-move cells depth player-piece opponent-piece)))))

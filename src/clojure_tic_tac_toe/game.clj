@@ -3,6 +3,8 @@
       (:require [clojure-tic-tac-toe.ui :as ui])
         (:require [clojure-tic-tac-toe.ai :as ai]))
 
+(def player-types ["human" "ai"])
+
 (defn valid-input? [input]
   (cond
     (integer? (read-string input)) (dec (Integer/parseInt input))
@@ -20,7 +22,7 @@
           input))))
 
 (defn get-move [board current-type current-mark next-mark]
-  (if (= current-type "ai")
+  (if (= current-type (second player-types))
       (dec (ai/get-move board 0 current-mark next-mark))
       (get-human-move board current-mark)))
 
@@ -39,24 +41,30 @@
             (ui/print-board updated-board)
             (recur second-piece first-piece next-type current-type updated-board)))))))
 
+(defn get-human-option []
+  (first player-types))
+
+(defn get-ai-option []
+  (second player-types))
+
 (defn get-options []
    (let [ _(ui/prompt-for-piece)
-          human-piece (read-line)
+          first-piece (read-line)
           _(ui/prompt-for-ai-piece)
-          ai-piece (read-line)
+          second-piece (read-line)
           size 9
           board (vec (range 1 (inc size)))
-          first-player "human"
-          second-player "ai"
+          first-player (get-human-option)
+          second-player (get-ai-option)
          ]
-   (assoc {} :human-marker human-piece :ai-marker ai-piece :board board :first-type first-player :second-type second-player)))
+   (assoc {} :first-marker first-piece :second-marker second-piece :board board :first-type first-player :second-type second-player)))
 
 (defn start-game [options]
-  (let [human-piece (get options :human-marker)
-        ai-piece (get options :ai-marker)
+  (let [first-piece (get options :first-marker)
+        second-piece (get options :second-marker)
         board (get options :board)
         first-player-type (get options :first-type)
         second-player-type (get options :second-type)
        ]
   (ui/print-board board)
-  (game-loop human-piece ai-piece first-player-type second-player-type board)))
+  (game-loop first-piece second-piece first-player-type second-player-type board)))

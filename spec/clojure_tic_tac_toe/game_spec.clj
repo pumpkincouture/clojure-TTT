@@ -23,8 +23,8 @@
       (with-redefs [read-line (constantly "X")]
       (should= {:second-type "ai"
                 :first-type "human"
-                :human-marker "X"
-                :ai-marker "X"
+                :first-marker "X"
+                :second-marker "X"
                 :board [1 2 3 4 5 6 7 8 9]}
         (get-options))))
 
@@ -41,15 +41,18 @@
                    "O"  5   6
                     7   8   9] "human" "X" "O"))))
 
-  (it "should play ai vs ai game"
-    (let [board [1 2 3 4 5 6 7 8 9]
-          game-over-message "game over"]
-      (with-redefs [println (constantly "game over")
-                    prn (constantly true)]
-      (should= game-over-message
-        (start-game {:second-type "ai"
-                     :first-type "ai"
-                     :human-marker "X"
-                     :ai-marker "O"
-                     :board [1 2 3 4 5 6 7 8 9]})))))
+  (it "gets the human's move"
+     (with-redefs [read-line (constantly "4")]
+      (should= 3
+        (get-human-move ["X" "X" "O"
+                          4   5   6
+                          7   8   9] "X"))))
+
+  (it "returns the human player type"
+      (should= "human"
+        (get-human-option)))
+
+  (it "returns the ai player type"
+      (should= "ai"
+        (get-ai-option)))
 )

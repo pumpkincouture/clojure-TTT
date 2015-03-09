@@ -39,12 +39,6 @@
                       "H" "T" "H"
                       "H" "T" "H"] "T" "H" 0)))
 
-  (it "returns highest rated move"
-      (should= 6
-        (get-move ["X"  2  "O"
-                   "O" "X"  6
-                   "X"  8  "O"] 0 "O" "X")))
-
   (it "returns move to block opponent"
       (should= 9
         (get-move ["X"  2   3
@@ -75,15 +69,15 @@
                    "X"   5   6
                    "X"   8   9] 0 "O" "X")))
 
-  (it "returns piece to win in next move"
-      (should= 9
+  (it "blocks opponent in the next move"
+      (should= 3
         (get-move ["X"  "X"  3
                    "O"  "O" "X"
                    "O"  "O"  9] 0 "O" "X")))
 
-  (it "returns winning move if five spaces left"
+  (it "returns best move if six spaces left"
       (should= 8
         (get-move ["X"  "O"  3
-                   "X"  "O"  6
+                    4   "O"  6
                     7    8   9] 0 "O" "X")))
 )
