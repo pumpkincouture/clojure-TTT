@@ -5,26 +5,45 @@
 (def ^:const loss -10)
 (def ^:const tie 0)
 
-(defn score-board [cells player-piece opponent-piece depth]
-  (cond
-    (= (board/winner? player-piece opponent-piece cells) player-piece) win
-    (= (board/winner? player-piece opponent-piece cells) opponent-piece) loss
-    :else tie))
+(defn switch-players [current-player cells]
+  (board/find-opponent-piece current-player cells))
 
-(defn generate-boards [cells player-piece opponent-piece depth]
-  (let [indexed-spaces (map dec (board/find-open-spaces cells))]
-   (map (fn [space] (board/place-move space player-piece cells)) indexed-spaces)))
+(def max-player (atom ""))
 
-(defn get-scores [cells player-piece opponent-piece depth]
- (map (fn [cells] (score-board cells player-piece opponent-piece depth)) (generate-boards cells player-piece opponent-piece (inc depth))))
+(defn set-max-player [player-piece]
+  (reset! max-player player-piece))
 
-(defn update-scores-list [cells depth player-piece opponent-piece]
-  (zipmap (board/find-open-spaces cells) (get-scores cells player-piece opponent-piece depth)))
+(defn score-board [cells current-player depth]
+  (let [opponent (switch-players current-player cells)]
+    (cond
+      (= (board/winner? current-player opponent cells) @max-player) (- win depth)
+      (= (board/winner? current-player opponent cells) opponent) (- loss depth)
+      :else tie)))
 
-(defn ai-move [cells depth player-piece opponent-piece]
-  (let [indexed-spaces (map dec (board/find-open-spaces cells))
-        min-scores (update-scores-list cells (inc depth) opponent-piece player-piece)]
-    (first (first (sort-by second > min-scores)))))
+(defn update-scores [move score current-player depth cells]
+  (println cells)
+  (println move "this is move")
+  (println score "this is score")
+  (println current-player "current player"))
 
-(defn get-move [cells depth player-piece opponent-piece]
-  (ai-move cells depth player-piece opponent-piece))
+(defn apply-minimax [cells depth current-player]
+  (for [open-space (board/find-open-spaces cells)]
+    (let [space-index (- open-space 1)
+          updated-board (board/place-move space-index current-player cells)
+         score (apply-minimax updated-board (inc depth) (switch-players current-player updated-board))]
+      (update-scores open-space score current-player depth updated-board))))
+
+;(defn ai-move [cells depth max-player min-player]
+
+;  (for [open-space (board/find-open-spaces cells)]
+;    (let [space-index (- open-space 1)
+;          updated-board (board/place-move space-index current-player cells)]
+
+;  (if (= max-player max-player)
+;     (update-scores cells (inc depth) max-player min-player)
+;     (update-scores cells (inc depth) min-player max-player)
+;  ))
+
+(defn get-move [cells depth current-player]
+  (set-max-player max-player)
+  (apply-minimax cells depth current-player))
