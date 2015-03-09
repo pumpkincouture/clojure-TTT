@@ -7,20 +7,20 @@
     (with-out-str (it)))
 
   (it "prints welcome to the game"
-    (should= "Welcome to Tic Tac Toe! Board is index based, when choosing a piece press 0 for 1, 1 for 2, etc\n"
+    (should= "Welcome to Tic Tac Toe! Please indicate your choice with a number. \n"
       (with-out-str (print-welcome))))
 
   (it "should print out a 3x3 board"
-    (should="\"                 \"\n\"  1  |  2  |  3  \"\n\"-----------------\"\n\"  4  |  5  |  6  \"\n\"-----------------\"\n\"  7  |  8  |  9  \"\n\"                 \"\n"
+    (should="\"-----------------\"\n\"  1  |  2  |  3  \"\n\"-----------------\"\n\"  4  |  5  |  6  \"\n\"-----------------\"\n\"  7  |  8  |  9  \"\n\"-----------------\"\n"
       (with-out-str (print-board [1 2 3 4 5 6 7 8 9]))))
 
   (it "should prompt the X player for a move"
     (should= "Player X , please choose a number :\n"
       (with-out-str (prompt-for-move "X"))))
 
-  (it "should print out what the player has chosen after they made a move"
-    (should= "Player Y chose space 6\n"
-      (with-out-str (print-choice "Y" "6"))))
+  (it "should print out the board representation of choice"
+    (should= "Player Y chose space 7\n"
+      (with-out-str (print-choice "Y" 6))))
 
   (it "should print out game winner"
     (should= "O wins!\n"
@@ -29,6 +29,20 @@
   (it "should print out cat's game if game is a tie"
     (should= "Cat's game!\n"
       (with-out-str (print-tie-game))))
+
+  (it "should print the winner of the game"
+    (should= "X wins!\n"
+      (with-out-str (print-result "X" "O"
+                             ["X" "X" "X"
+                              "O" "X" "O"
+                               7   8   9]))))
+
+  (it "should print a tie game message"
+    (should= "Cat's game!\n"
+      (with-out-str (print-result "X" "O"
+                             ["O" "X" "O"
+                              "O" "X" "X"
+                              "X" "O" "O"]))))
 
   (it "should print an error message if input invalid"
     (should= "That is not a valid choice, please try again!\n"
