@@ -54,5 +54,11 @@
       (should= 8
         (get-move ["X" "O" "O"
                    "O" "O" "X"
-                   "X"  8  "X"] 0 "O")))
+                   "X"  8  "X"] 0 (set-max-player "O"))))
+
+  (it "returns 8 as best move"
+      (should= 8
+        (get-move ["X" "O" "O"
+                   "O" "O" "X"
+                    7   8  "X"] 0 (set-max-player "O"))))
 )
