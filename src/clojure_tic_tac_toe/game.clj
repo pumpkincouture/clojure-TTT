@@ -23,7 +23,7 @@
 
 (defn get-move [board current-type current-mark next-mark]
   (if (= current-type (second player-types))
-      (dec (ai/get-move board 0 current-mark next-mark))
+      (dec (ai/ai-move board 0 current-mark))
       (get-human-move board current-mark)))
 
 (defn game-loop [first-piece second-piece current-type next-type board]

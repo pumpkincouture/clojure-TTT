@@ -52,13 +52,19 @@
                                 7   8  9])))
   (it "returns 8 as best move"
       (should= 8
-        (get-move ["X" "O" "O"
-                   "O" "O" "X"
-                   "X"  8  "X"] 0 (set-max-player "O"))))
+        (ai-move ["X" "O" "O"
+                  "O" "O" "X"
+                  "X"  8  "X"] 0 (set-max-player "O"))))
 
-  (it "returns 8 as best move"
+  (it "returns 9 as best move"
+      (should= 9
+        (ai-move ["X" "O" "O"
+                  "O" "X" "X"
+                  "X"  8   9] 0 (set-max-player "O"))))
+
+  (it "returns 7 as best move"
       (should= 8
-        (get-move ["X" "O" "O"
-                   "O" "O" "X"
-                    7   8  "X"] 0 (set-max-player "O"))))
+        (ai-move ["X" "O" "O"
+                  "O" "O" "X"
+                   7   8   9] 0 (set-max-player "O"))))
 )
