@@ -19,19 +19,21 @@
 (defn score-board [cells current-player depth]
   (let [opponent (switch-players current-player cells)]
     (cond
-      (= (board/winner? current-player opponent cells) "O") (- win depth)
-      (= (board/winner? current-player opponent cells) "X") (- depth win)
-      :else tie)))
+      (= (board/winner? current-player opponent cells) "O") (/ 10 depth)
+      (= (board/winner? current-player opponent cells) "X") (/ -10 depth)
+      :else 0)))
 
 (defn get-scores [cells current-player depth]
 ;(println current-player depth cells "current player, depth and cells from get-scores, ")
    (if (board/game-over? current-player (switch-players current-player cells) cells)
       (score-board cells current-player depth)
       (let [scores-list (vec (update-each-space cells current-player depth))]
+      ; (not (some #{4} (board/find-open-spaces cells))) (println scores-list)
        (= current-player "O") (apply max scores-list)
        (= current-player "X") (apply min scores-list))))
 
 (defn update-each-space [cells current-player depth]
+  ;(println current-player "actual player in update each space")
   ;(println cells "cells from update each space")
   ;(println (board/find-open-spaces cells) "remaining cells")
   (let [open-spaces (board/find-open-spaces cells)]
@@ -49,6 +51,7 @@
       (place-scored-move cells current-player space depth))))
 
 (defn update-scores-list [cells depth current-player]
+ ; (println (board/find-open-spaces cells) "open cells from update scores")
   (zipmap (board/find-open-spaces cells) (get-spaces cells current-player depth)))
 
 (defn get-move [cells depth current-player]

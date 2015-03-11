@@ -71,7 +71,7 @@
 (defn tie? [cells piece-one piece-two]
   (let [open-spaces (find-open-spaces cells) cells cells]
      (cond
-       (and (empty? open-spaces) (not (winner? piece-one piece-two cells)) (not (winner? piece-one piece-two cells))) true
+       (and (full? cells) (not (winner? piece-one piece-two cells))) true
        :else false)))
 
 (defn game-over? [piece-one piece-two cells]
