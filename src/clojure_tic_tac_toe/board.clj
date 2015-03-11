@@ -13,6 +13,9 @@
 (defn full? [cells]
   (= (size? cells) (count (filter string? cells))))
 
+(defn board-empty? [cells]
+  (= (size? cells) (count (filter number? cells))))
+
 (defn open-space? [index cells]
   (number? (get cells index)))
 

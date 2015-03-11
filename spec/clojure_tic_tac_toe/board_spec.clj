@@ -31,9 +31,13 @@
     (should= false
       (full? ["X" "O" "X" 4 "X" "O" "O" "X" "O"])))
 
-  (it "returns false if board is not full"
-    (should= false
-      (full? [1 2 "X" "X" 5 "O" "O" "X" "O"])))
+  (it "returns true if board is full"
+    (should= true
+      (full? ["X" "O" "X" "O" "X" "O" "O" "X" "O"])))
+
+  (it "returns true if board is empty"
+    (should= true
+      (board-empty? [1 2 3 4 5 6 7 8 9])))
 
   (it "checks if the chosen space is not within range"
     (should= false

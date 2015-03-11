@@ -20,16 +20,16 @@
   (let [opponent (switch-players current-player cells)]
     (cond
       (= (board/winner? current-player opponent cells) "O") (- win depth)
-      (= (board/winner? current-player opponent cells) "X") (- loss depth)
+      (= (board/winner? current-player opponent cells) "X") (- depth win)
       :else tie)))
 
 (defn get-scores [cells current-player depth]
-  ;(println current-player depth cells "current player, depth and cells from get-scores, ")
+;(println current-player depth cells "current player, depth and cells from get-scores, ")
    (if (board/game-over? current-player (switch-players current-player cells) cells)
       (score-board cells current-player depth)
       (let [scores-list (vec (update-each-space cells current-player depth))]
-     (if (= current-player "O") (apply max scores-list)
-      (apply min scores-list)))))
+       (= current-player "O") (apply max scores-list)
+       (= current-player "X") (apply min scores-list))))
 
 (defn update-each-space [cells current-player depth]
   ;(println cells "cells from update each space")
@@ -58,4 +58,11 @@
 
 (defn ai-move [cells depth current-player]
   (println (get-move cells depth current-player) "scores from ai move")
-  (first (first (sort-by second > (get-move cells depth current-player)))))
+  (cond
+    (board/board-empty? cells) (rand-nth [1])
+   :else (first (first (sort-by second > (get-move cells depth current-player))))))
+
+
+; (map minimax open-cells depth current-player opponent)
+
+

@@ -5,14 +5,14 @@
 (describe "AI"
   (it "generates a score of 10 for computer win"
       (should= 10
-        (score-board ["O"  2  "X"
+        (score-board ["O"  2  "O"
                       "O" "X" "X"
                       "O"  8  "X"] "O" 0)))
 
   (it "generates a score of -10 for opponent win"
       (should= -10
         (score-board ["X"  2  "O"
-                      "X" "T" "X"
+                      "X" "O" "X"
                       "X"  8  "O"] "O" 0)))
 
   (it "generates a score of -10 for computer loss"
@@ -50,23 +50,29 @@
           (switch-players "X" ["O" "X" 3
                                 4   5  6
                                 7   8  9])))
-  (it "returns 8 as best move"
-      (should= 8
-        (ai-move ["X" "O" "O"
-                  "O" "O" "X"
-                  "X"  8  "X"] 0 (set-max-player "O"))))
+  (it "returns 6 as best move"
+      (should= 6
+        (ai-move ["X" "X" "O"
+                  "O" "X"  6
+                   7   8  "O"] 0 (set-max-player "O"))))
 
-  (it "returns 9 as best move"
-      (should= 9
-        (ai-move ["X" "O" "O"
-                  "O" "X" "X"
-                  "X"  8   9] 0 (set-max-player "O"))))
-
-  (it "returns 8 as best move"
-      (should= 8
-        (ai-move ["X" "O" "O"
+  (it "returns 7 as best move"
+      (should= 7
+        (ai-move ["X" "X" "O"
                   "O" "O" "X"
                    7   8   9] 0 (set-max-player "O"))))
+
+  (it "returns 5 as best move"
+      (should= 5
+        (ai-move ["X"  2  "O"
+                  "O"  5   6
+                  "O" "X" "X"] 0 (set-max-player "O"))))
+
+  (it "returns 3 as best move"
+      (should= 3
+        (ai-move [ 1  "X"  3
+                   4   5  "X"
+                  "O" "O" "X"] 0 (set-max-player "O"))))
 
   (it "returns 2 as best move"
       (should= 2
@@ -80,12 +86,6 @@
                    4  "X"  6
                   "O"  8   9] 0 "O")))
 
-  (it "blocks opponent in top right corner"
-      (should= 3
-        (ai-move ["X" "X"  3
-                   4   5   6
-                  "O"  8   9] 0 "O")))
-
    (it "blocks opponent in the bottom left corner"
       (should= 7
         (ai-move [ 1  "O" "X"
@@ -93,13 +93,13 @@
                    7   8   9] 0 "O")))
 
    (it "returns best move if computer makes second move"
-      (should= 5
+      (should= 9
         (ai-move ["X"  2   3
                    4   5   6
                    7   8   9] 0 "O")))
 
    (it "returns best move if computer makes first move"
-      (should= 5
+      (should= 1
         (ai-move [ 1   2   3
                    4   5   6
                    7   8   9] 0 "O")))
