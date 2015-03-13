@@ -104,12 +104,6 @@
                  4  "X"  6
                 "X"  8   9] 0 "O")))
 
-   (it "returns 5 as computer's first move"
-     (should= 5
-       (ai-move ["X"  2   3
-                  4   5   6
-                  7   8   9] 0 "O")))
-
    (it "returns 2 as computer's winning move"
       (should= 2
         (ai-move ["X"  2   3
@@ -133,4 +127,10 @@
         (ai-move [ 1   2   3
                    4   5   6
                    7   8   9] 0 "O")))
+
+   (it "returns 5 as computer's first move"
+     (should= 5
+       (ai-move ["X"  2   3
+                  4   5   6
+                  7   8   9] 0 "O")))
 )

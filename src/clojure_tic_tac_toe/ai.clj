@@ -24,7 +24,7 @@
       :else tie)))
 
 (defn minimax [cells current-player depth]
-   (if (board/game-over? current-player (switch-players current-player cells) cells)
+   (if (or (= depth 6) (board/game-over? current-player (switch-players current-player cells) cells))
       (score-board cells current-player depth)
       (let [scores-list (vec (update-each-space cells current-player depth))]
        (= current-player "O") (apply max scores-list)
@@ -45,7 +45,7 @@
       (place-scored-move cells current-player space depth))))
 
 (defn minimax-move [cells depth current-player]
-  (println (get-spaces cells current-player depth) (board/find-open-spaces cells))
+(println (map vector (vec (board/find-open-spaces cells)) (vec (get-spaces cells current-player depth))))
   (let [values (map vector (vec (board/find-open-spaces cells)) (vec (get-spaces cells current-player depth)))
         ]
     (first (first (sort-by second > values)))))
