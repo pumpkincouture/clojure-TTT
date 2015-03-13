@@ -28,7 +28,7 @@
                 :board [1 2 3 4 5 6 7 8 9]}
         (get-options))))
 
- (it "should get the ai move if current player-type is ai"
+ (xit "should get the ai move if current player-type is ai"
      (should= 2
        (get-move ["X" "X"  3
                   "O"  5   6

@@ -49,24 +49,24 @@
       (should= "O"
           (switch-players "X" ["O" "X" 3
                                 4   5  6
-                                7   8  9])))
+                               7   8  9])))
   (it "returns 6 as best move"
     (should= 6
        (ai-move ["X" "X" "O"
                  "O" "X"  6
                   7   8  "O"] 0 (set-max-player "O"))))
 
+(it "returns 7 as best move"
+  (should= 7
+    (ai-move ["X"  2   3
+              "X" "O"  6
+               7   8   9] 0 (set-max-player "O"))))
+
  (it "returns 7 as best move"
    (should= 7
-     (ai-move ["X"  2   3
-               "X" "O"  6
+     (ai-move ["X" "X" "O"
+               "O" "O" "X"
                 7   8   9] 0 (set-max-player "O"))))
-
-(it "returns 7 as best move"
-    (should= 7
-      (ai-move ["X" "X" "O"
-                "O" "O" "X"
-                 7   8   9] 0 (set-max-player "O"))))
 
 (it "returns 5 as best move"
     (should= 5
