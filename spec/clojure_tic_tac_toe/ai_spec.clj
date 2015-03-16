@@ -7,31 +7,43 @@
       (should= 10
         (score-board ["O"  2  "O"
                       "O" "X" "X"
-                      "O"  8  "X"] "O" 0)))
+                      "O"  8  "X"] (set-max-player "O") 0)))
 
   (it "generates a score of -10 for opponent win"
+      (set-min-player "O" ["X"  2  "O"
+                           "X" "O" "X"
+                           "X"  8  "O"])
       (should= -10
         (score-board ["X"  2  "O"
                       "X" "O" "X"
-                      "X"  8  "O"] "O" 0)))
+                      "X"  8  "O"] (set-max-player "O") 0)))
 
   (it "generates a score of -10 for computer loss"
+      (set-min-player "O" ["X"  2  "X"
+                           "O" "X" "X"
+                           "X"  8  "O"])
       (should= -10
         (score-board ["X"  2  "X"
                       "O" "X" "X"
-                      "X"  8  "O"] "O" 0)))
+                      "X"  8  "O"] (set-max-player "O") 0)))
 
   (it "returns a score of -10 for computer loss"
+      (set-min-player "O" ["X"  2  "X"
+                           "O" "O" "X"
+                           "X"  8  "X"])
       (should= -10
         (score-board ["X"  2  "X"
                       "O" "O" "X"
-                      "X"  8  "X"] "O" 0)))
+                      "X"  8  "X"] (set-max-player "O") 0)))
 
-  (it "returns a score of -10 for opponent win"
+  (it "returns a score of -10 for T win"
+      (set-min-player "$" [ 1   2  "$"
+                           "T" "$" "T"
+                           "T" "T" "T"])
       (should= -10
-        (score-board [ 1   2  "O"
-                      "X" "O" "X"
-                      "X" "X" "X"] "O" 0)))
+        (score-board [ 1   2  "$"
+                      "T" "$" "T"
+                      "T" "T" "T"] (set-max-player "$") 0)))
 
   (it "generates a score of 0 for tie board"
       (should= 0
@@ -130,7 +142,7 @@
 
    (it "returns 5 as computer's first move"
      (should= 5
-       (ai-move ["X"  2   3
+       (ai-move ["T"  2   3
                   4   5   6
-                  7   8   9] 0 "O")))
+                  7   8   9] 0 "P")))
 )

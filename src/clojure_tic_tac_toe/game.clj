@@ -5,16 +5,6 @@
 
 (def player-types ["human" "ai"])
 
-(declare get-human-move)
-
-(defmulti get-move (fn [current-player board] :player-type current-player))
-
-(defmethod get-move (first player-types) [current-player board]
-  (get-human-move))
-
-(defmethod get-move (second player-types) [current-player board]
-  (dec (ai/ai-move board 0 :second-piece)))
-
 (defn valid-input? [input]
   (cond
     (integer? (read-string input)) (dec (Integer/parseInt input))
