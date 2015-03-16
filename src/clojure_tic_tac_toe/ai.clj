@@ -49,9 +49,12 @@
   (let [values (zipmap (board/find-open-spaces cells) (get-spaces cells current-player depth))]
     (first (first (sort-by second > values)))))
 
+(defn best-move []
+  (vec [1 3 7 9]))
+
 (defn ai-move [cells depth current-player]
    (if (board/board-empty? cells)
-     1
+      (rand-nth (best-move))
       (let [max-player (set-max-player current-player)
             min-player (set-min-player current-player cells)
             ]

@@ -134,11 +134,9 @@
                    4  "O" "O"
                    7   8  "X"] 0 "O")))
 
-   (it "returns best move if computer makes first move"
-      (should= 1
-        (ai-move [ 1   2   3
-                   4   5   6
-                   7   8   9] 0 "O")))
+   (it "contains the options a computer should take on first turn"
+      (should= [1 3 7 9]
+        (best-move)))
 
    (it "returns 5 as computer's first move"
      (should= 5
