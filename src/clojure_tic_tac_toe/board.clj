@@ -16,6 +16,14 @@
 (defn board-empty? [cells]
   (= (size? cells) (count (filter number? cells))))
 
+(defn get-random-move [cells]
+  (first (filter integer? (shuffle cells))))
+
+(defn current-player [cells piece-one piece-two]
+  (if (even? (count (filter string? cells)))
+  (piece-one)
+  (piece-two)))
+
 (defn open-space? [index cells]
   (number? (get cells index)))
 

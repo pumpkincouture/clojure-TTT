@@ -7,17 +7,19 @@
 (def ^:const loss -10)
 (def ^:const tie 0)
 
-(defn switch-players [current-player cells]
-  (board/find-opponent-piece current-player cells))
-
-(def max-player (atom ""))
+(def max-player (atom "O"))
 (def min-player (atom "X"))
+
+(defn switch-players [current-player cells]
+  (if (= current-player @max-player)
+    @min-player
+    @max-player))
 
 (defn set-max-player [player-piece]
   (reset! max-player player-piece))
 
 (defn set-min-player [player-piece cells]
-  (reset! min-player (switch-players player-piece cells)))
+  (reset! min-player (board/find-opponent-piece player-piece cells)))
 
 (defn score-board [cells current-player depth]
   (let [opponent (switch-players current-player cells)]
@@ -41,12 +43,13 @@
         (apply-minimax updated-board current-player (inc depth))))))
 
 (defn calculate-best-move [cells depth current-player]
+  (set-min-player current-player cells)
   (let [values (zipmap (board/find-open-spaces cells) (rank-each-space cells current-player depth))]
     (first (first (sort-by second > values)))))
 
 (defn ai-move [cells depth current-player]
-  (let [max-player (set-max-player current-player)
-        min-player (set-min-player current-player cells)
-       ]
-  (calculate-best-move cells depth max-player)))
+  (if (board/board-empty? cells)
+     (board/get-random-move cells)
+       (let [max-player (set-max-player current-player)]
+         (calculate-best-move cells depth max-player))))
 
