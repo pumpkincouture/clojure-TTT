@@ -4,10 +4,6 @@
         (:require [clojure-tic-tac-toe.ai :as ai]))
 
 (def player-types ["human" "ai"])
-(declare get-human-move)
-
-(def first-player (atom {}))
-(def second-player (atom {}))
 
 (defn valid-input? [input]
   (cond
@@ -41,9 +37,9 @@
       (do
        (let [move (get-move board current-type first-piece second-piece)]
        (let [updated-board (board/place-move move first-piece board)]
-      (ui/print-choice first-piece move)
-      (ui/print-board updated-board)
-    (recur second-piece first-piece next-type current-type updated-board)))))))
+        (ui/print-choice first-piece move)
+        (ui/print-board updated-board)
+          (recur second-piece first-piece next-type current-type updated-board)))))))
 
 (defn get-human-option []
   (first player-types))
@@ -69,7 +65,5 @@
         first-player-type (get options :first-type)
         second-player-type (get options :second-type)
        ]
-  (swap! first-player assoc :player-type first-player-type :player-piece first-piece)
-  (swap! second-player assoc :player-type second-player-type :player-piece second-piece)
   (ui/print-board board)
  (game-loop first-piece second-piece first-player-type second-player-type board)))
