@@ -26,7 +26,7 @@
             (dec (ai/ai-move board 0 current-mark))
                   (get-human-move board current-mark)))
 
-(defn game-loop [first-piece second-piece current-type next-type board]
+(defn play-game [first-piece second-piece current-type next-type board]
  (loop [first-piece  first-piece
         second-piece  second-piece
         current-type current-type
@@ -66,4 +66,4 @@
         second-player-type (get options :second-type)
        ]
   (ui/print-board board)
- (game-loop first-piece second-piece first-player-type second-player-type board)))
+ (play-game first-piece second-piece first-player-type second-player-type board)))

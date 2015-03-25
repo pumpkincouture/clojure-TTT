@@ -3,6 +3,9 @@
   (:use clojure-tic-tac-toe.game))
 
 (describe "Game"
+  (around [it]
+      (with-out-str (it)))
+
   (it "returns the index if choice is an integer"
      (should= 4
        (valid-input? "5")))
