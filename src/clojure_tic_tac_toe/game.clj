@@ -41,12 +41,6 @@
         (ui/print-board updated-board)
           (recur second-piece first-piece next-type current-type updated-board)))))))
 
-(defn get-human-option []
-  (first player-types))
-
-(defn get-ai-option []
-  (second player-types))
-
 (defn get-options []
    (let [ _(ui/prompt-for-piece)
           first-piece (read-line)
@@ -54,8 +48,8 @@
           second-piece (read-line)
           size 9
           board (vec (range 1 (inc size)))
-          first-player (get-human-option)
-          second-player (get-ai-option)
+          first-player (first player-types)
+          second-player (second player-types)
          ]
    (assoc {} :first-marker first-piece :second-marker second-piece :board board :first-type first-player :second-type second-player)))
 

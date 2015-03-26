@@ -50,12 +50,4 @@
         (get-human-move ["X" "X" "O"
                           4   5   6
                           7   8   9] "X"))))
-
-  (it "returns the human player type"
-      (should= "human"
-        (get-human-option)))
-
-  (it "returns the ai player type"
-      (should= "ai"
-        (get-ai-option)))
 )
