@@ -11,7 +11,9 @@
     :else false))
 
 (defn get-human-move [board player-piece]
-   (let [input (valid-input? (ui/prompt-for-move player-piece))]
+   (ui/prompt-for-move player-piece)
+   (let [choice (read-line)
+         input (valid-input? choice)]
    (if (board/open-and-valid? input board)
       input
        (do
