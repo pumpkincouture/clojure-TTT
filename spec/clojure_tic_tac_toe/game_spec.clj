@@ -22,15 +22,6 @@
      (should= 7
        (valid-input? "8")))
 
-  (it "should return game options"
-      (with-redefs [read-line (constantly "X")]
-      (should= {:second-type "ai"
-                :first-type "human"
-                :first-marker "X"
-                :second-marker "X"
-                :board [1 2 3 4 5 6 7 8 9]}
-        (get-options))))
-
   (it "should get the ai move if current player-type is ai"
        (should= 2
          (get-move ["X" "X"  3

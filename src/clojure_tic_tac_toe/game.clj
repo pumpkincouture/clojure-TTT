@@ -11,9 +11,7 @@
     :else false))
 
 (defn get-human-move [board player-piece]
-   (ui/prompt-for-move player-piece)
-   (let [choice (read-line)
-         input (valid-input? choice)]
+   (let [input (valid-input? (ui/prompt-for-move player-piece))]
    (if (board/open-and-valid? input board)
       input
        (do
@@ -41,23 +39,12 @@
         (ui/print-board updated-board)
           (recur second-piece first-piece next-type current-type updated-board)))))))
 
-(defn get-options []
-   (let [ _(ui/prompt-for-piece)
-          first-piece (read-line)
-          _(ui/prompt-for-ai-piece)
-          second-piece (read-line)
-          size 9
-          board (vec (range 1 (inc size)))
-          first-player (first player-types)
-          second-player (second player-types)
-         ]
-   (assoc {} :first-marker first-piece :second-marker second-piece :board board :first-type first-player :second-type second-player)))
-
 (defn start-game [options]
   (let [first-piece (get options :first-marker)
         second-piece (get options :second-marker) board (get options :board)
         first-player-type (get options :first-type)
         second-player-type (get options :second-type)
        ]
+  (ui/print-welcome)
   (ui/print-board board)
- (play-game first-piece second-piece first-player-type second-player-type board)))
+  (play-game first-piece second-piece first-player-type second-player-type board)))

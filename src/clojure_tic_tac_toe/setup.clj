@@ -6,17 +6,15 @@
 (def add-to-options (fn [symbol option] (swap! options-list assoc-in [symbol] option)))
 
 (defn get-first-player []
-  (ui/prompt-for-piece)
-  (read-line))
+  (ui/prompt-for-piece))
 
 (defn get-second-player []
-  (ui/prompt-for-ai-piece)
-  (read-line))
+  (ui/prompt-for-ai-piece))
 
 (defn get-board []
   (vec (range 1 (inc 9))))
 
-(defn get-setup-options []
+(defn get-options []
   (add-to-options :first-marker (get-first-player))
   (add-to-options :second-marker (get-second-player))
   (add-to-options :board (get-board))
