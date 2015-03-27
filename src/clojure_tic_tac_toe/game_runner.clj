@@ -1,9 +1,9 @@
-(ns clojure-tic-tac-toe.core
+(ns clojure-tic-tac-toe.game_runner
   (:require [clojure-tic-tac-toe.ui :as ui])
   (:require [clojure-tic-tac-toe.game :as game])
+  (:require [clojure-tic-tac-toe.setup :as setup])
   (:gen-class :main true))
 
 (defn -main []
-  (ui/print-welcome)
-  (game/start-game (game/get-options)))
+  (game/start-game (setup/get-options)))
 

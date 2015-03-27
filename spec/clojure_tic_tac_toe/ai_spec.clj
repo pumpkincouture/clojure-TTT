@@ -51,17 +51,6 @@
                       "X" "O" "X"
                       "X" "O" "X"] "O" 0)))
 
-  (it "returns X if O is the current player"
-      (should= "X"
-          (switch-players "O" ["X"  2  3
-                                4   5  6
-                                7   8  9])))
-
-  (it "returns O if X is the current player"
-      (should= "O"
-          (switch-players "X" ["O" "X" 3
-                                4   5  6
-                               7   8  9])))
   (it "returns 6 as best move"
     (should= 6
        (ai-move ["X" "X" "O"
@@ -133,10 +122,6 @@
         (ai-move ["X"  2  "X"
                    4  "O" "O"
                    7   8  "X"] 0 "O")))
-
-   (it "contains the options a computer should take on first turn"
-      (should= [1 3 7 9]
-        (best-move)))
 
    (it "returns 5 as computer's first move"
      (should= 5

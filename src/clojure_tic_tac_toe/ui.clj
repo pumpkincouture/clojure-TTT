@@ -6,23 +6,26 @@
  (println "Welcome to Tic Tac Toe! Please indicate your choice with a number. "))
 
 (defn prompt-for-piece []
-  (println "Human, please choose your game piece :"))
+  (println "Human, please choose your game piece :")
+  (read-line))
 
 (defn prompt-for-ai-piece []
-  (println "Human, please pick your opponent's game piece :"))
+  (println "Human, please pick your opponent's game piece :")
+  (read-line))
 
 (defn print-board [board]
-  (prn "-----------------")
-  (prn (str "  " (board 0) "  |  " (board 1) "  |  " (board 2) "  "))
-  (prn "-----------------")
-  (prn (str "  " (board 3) "  |  " (board 4) "  |  " (board 5) "  "))
-  (prn "-----------------")
-  (prn (str "  " (board 6) "  |  " (board 7) "  |  " (board 8) "  "))
-  (prn "-----------------")
-)
+  (println "")
+  (prn "-----------")
+  (loop [start (- (board/size? board) (board/size? board)) middle (+ 1 start) end (+ 2 (- (board/size? board) (board/size? board)))]
+    (prn (str " " (board start) " | " (board middle) " | " (board end) " "))
+    (prn "-----------")
+    (if (= end (- (board/size? board) 1))
+      (println "")
+      (recur (+ start 3) (+ middle 3) (+ end 3)))))
 
 (defn prompt-for-move [player-piece]
   (println "Player" player-piece ", please choose a number :"))
+
 
 (defn print-choice [player-piece choice]
   (println "Player" player-piece "chose space" (inc choice)))

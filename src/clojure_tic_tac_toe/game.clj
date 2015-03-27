@@ -22,42 +22,24 @@
           input))))
 
 (defn get-move [board current-type current-mark next-mark]
-  (if (= current-type (second player-types))
-      (dec (ai/ai-move board 0 current-mark))
-      (get-human-move board current-mark)))
+    (if (= current-type (second player-types))
+            (dec (ai/ai-move board 0 current-mark))
+                  (get-human-move board current-mark)))
 
-(defn game-loop [first-piece second-piece current-type next-type board]
-   (loop [first-piece  first-piece
-          second-piece  second-piece
-          current-type current-type
-          next-type next-type
-          board board]
-    (if (board/game-over? first-piece second-piece board)
-       (ui/print-result first-piece second-piece board)
-          (do
-            (let [move (get-move board current-type first-piece second-piece)]
-            (let [updated-board (board/place-move move first-piece board)]
-            (ui/print-choice first-piece move)
-            (ui/print-board updated-board)
-            (recur second-piece first-piece next-type current-type updated-board)))))))
-
-(defn get-human-option []
-  (first player-types))
-
-(defn get-ai-option []
-  (second player-types))
-
-(defn get-options []
-   (let [ _(ui/prompt-for-piece)
-          first-piece (read-line)
-          _(ui/prompt-for-ai-piece)
-          second-piece (read-line)
-          size 9
-          board (vec (range 1 (inc size)))
-          first-player (get-human-option)
-          second-player (get-ai-option)
-         ]
-   (assoc {} :first-marker first-piece :second-marker second-piece :board board :first-type first-player :second-type second-player)))
+(defn play-game [first-piece second-piece current-type next-type board]
+ (loop [first-piece  first-piece
+        second-piece  second-piece
+        current-type current-type
+        next-type next-type
+        board board]
+  (if (board/game-over? first-piece second-piece board)
+      (ui/print-result first-piece second-piece board)
+      (do
+       (let [move (get-move board current-type first-piece second-piece)]
+       (let [updated-board (board/place-move move first-piece board)]
+        (ui/print-choice first-piece move)
+        (ui/print-board updated-board)
+          (recur second-piece first-piece next-type current-type updated-board)))))))
 
 (defn start-game [options]
   (let [first-piece (get options :first-marker)
@@ -65,5 +47,6 @@
         first-player-type (get options :first-type)
         second-player-type (get options :second-type)
        ]
+  (ui/print-welcome)
   (ui/print-board board)
-  (game-loop first-piece second-piece first-player-type second-player-type board)))
+  (play-game first-piece second-piece first-player-type second-player-type board)))

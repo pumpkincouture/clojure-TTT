@@ -10,8 +10,18 @@
     (should= "Welcome to Tic Tac Toe! Please indicate your choice with a number. \n"
       (with-out-str (print-welcome))))
 
+  (it "prompts the human to choose a gamepiece"
+    (with-redefs [read-line (constantly "%")]
+    (should= "Human, please choose your game piece :\n"
+      (with-out-str (prompt-for-piece)))))
+
+  (it "prompts the human to choose a gamepiece for the opponent"
+    (with-redefs [read-line (constantly "&")]
+    (should= "Human, please pick your opponent's game piece :\n"
+      (with-out-str (prompt-for-ai-piece)))))
+
   (it "should print out a 3x3 board"
-    (should="\"-----------------\"\n\"  1  |  2  |  3  \"\n\"-----------------\"\n\"  4  |  5  |  6  \"\n\"-----------------\"\n\"  7  |  8  |  9  \"\n\"-----------------\"\n"
+    (should="\n\"-----------\"\n\" 1 | 2 | 3 \"\n\"-----------\"\n\" 4 | 5 | 6 \"\n\"-----------\"\n\" 7 | 8 | 9 \"\n\"-----------\"\n\n"
       (with-out-str (print-board [1 2 3 4 5 6 7 8 9]))))
 
   (it "should prompt the X player for a move"
