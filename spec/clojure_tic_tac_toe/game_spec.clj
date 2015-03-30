@@ -26,14 +26,14 @@
        (should= 2
          (get-move ["X" "X"  3
                     "O"  5   6
-                    7   8   9] "ai" "O" "X")))
+                    7   8   9] "ai" "O")))
 
   (it "should get the human move if current-piece is not ai"
      (with-redefs [read-line (constantly "3")]
        (should= 2
          (get-move ["X" "X"  3
                     "O"  5   6
-                     7   8   9] "human" "X" "O"))))
+                     7   8   9] "human" "X"))))
 
   (it "gets the human's move"
      (with-redefs [read-line (constantly "4")]

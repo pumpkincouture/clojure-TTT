@@ -4,6 +4,7 @@
         (:require [clojure-tic-tac-toe.ai :as ai]))
 
 (def player-types ["human" "ai"])
+(declare get-move)
 
 (defn valid-input? [input]
   (cond
@@ -18,10 +19,10 @@
       input
        (do
          (ui/print-error)
-         [input (get-human-move board player-piece)]
+         [input (get-move board (first player-types) player-piece)]
           input))))
 
-(defn get-move [board current-type current-mark next-mark]
+(defn get-move [board current-type current-mark]
     (if (= current-type (second player-types))
             (dec (ai/ai-move board 0 current-mark))
                   (get-human-move board current-mark)))
@@ -35,7 +36,7 @@
   (if (board/game-over? first-piece second-piece board)
       (ui/print-result first-piece second-piece board)
       (do
-       (let [move (get-move board current-type first-piece second-piece)]
+       (let [move (get-move board current-type first-piece)]
        (let [updated-board (board/place-move move first-piece board)]
         (ui/print-choice first-piece move)
         (ui/print-board updated-board)
