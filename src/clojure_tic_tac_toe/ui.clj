@@ -24,7 +24,8 @@
       (recur (+ start 3) (+ middle 3) (+ end 3)))))
 
 (defn prompt-for-move [player-piece]
-  (println "Player" player-piece ", please choose a number :"))
+  (println "Player" player-piece ", please choose a number :")
+  (read-line))
 
 
 (defn print-choice [player-piece choice]

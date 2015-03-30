@@ -31,10 +31,6 @@
     (should= false
       (full? ["X" "O" "X" 4 "X" "O" "O" "X" "O"])))
 
-  (it "returns the correct player"
-    (should= {:player-type "human" :player-piece "X"}
-      (current-player ["X" "O" "X" 4 "X" "O" "O" "X" "O"] {:player-type "human" :player-piece "X"} {:player-type "computer" :player-piece "O"})))
-
   (it "returns true if board is full"
     (should= true
       (full? ["X" "O" "X" "O" "X" "O" "O" "X" "O"])))

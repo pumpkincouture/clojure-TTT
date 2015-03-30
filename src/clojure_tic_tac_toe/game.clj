@@ -11,16 +11,18 @@
     (integer? (read-string input)) (dec (Integer/parseInt input))
     :else false))
 
-(defn get-human-move [board player-piece]
-   (ui/prompt-for-move player-piece)
-   (let [choice (read-line)
-         input (valid-input? choice)]
-   (if (board/open-and-valid? input board)
+(defn prompt-until-valid [board player-piece]
+  (ui/print-error)
+  (let [input (valid-input? (ui/prompt-for-move player-piece))]
+    (if (board/open-and-valid? input board)
       input
-       (do
-         (ui/print-error)
-         [input (get-move board (first player-types) player-piece)]
-          input))))
+      (recur board player-piece))))
+
+(defn get-human-move [board player-piece]
+   (let [input (valid-input? (ui/prompt-for-move player-piece))]
+   (cond
+     (board/open-and-valid? input board) input
+     :else (prompt-until-valid board player-piece))))
 
 (defn get-move [board current-type current-mark]
     (if (= current-type (second player-types))

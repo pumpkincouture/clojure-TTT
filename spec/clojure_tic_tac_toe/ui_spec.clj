@@ -25,8 +25,9 @@
       (with-out-str (print-board [1 2 3 4 5 6 7 8 9]))))
 
   (it "should prompt the X player for a move"
+    (with-redefs [read-line (constantly "3")]
     (should= "Player X , please choose a number :\n"
-      (with-out-str (prompt-for-move "X"))))
+      (with-out-str (prompt-for-move "X")))))
 
   (it "should print out the board representation of choice"
     (should= "Player Y chose space 7\n"

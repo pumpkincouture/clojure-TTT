@@ -6,12 +6,12 @@
   (around [it]
     (with-out-str (it)))
 
-  (it "should get the first player's piece choice"
+  (it "should return the first player's piece choice"
       (with-redefs [read-line (constantly "X")]
       (should= "X"
          (get-first-player))))
 
-  (it "should get the second players piece choice"
+  (it "should return the second players piece choice"
       (with-redefs [read-line (constantly "O")]
       (should= "O"
          (get-second-player))))
