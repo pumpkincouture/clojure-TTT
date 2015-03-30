@@ -2,6 +2,7 @@
 Tic Tac Toe game written in Clojure, version 1.6
 
 ##Setup
+To install Clojure, check out the [Getting Started](http://clojure.org/getting_started) page.
 This project requires [Leiningen](https://github.com/technomancy/leiningen) - please download and make sure you have the lein command available by entering ```which lein```.
 
 ##How to play
