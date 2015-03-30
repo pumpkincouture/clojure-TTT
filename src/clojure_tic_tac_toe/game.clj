@@ -19,9 +19,9 @@
 
 (defn get-human-move [board player-piece]
    (let [input (valid-input? (ui/prompt-for-move player-piece))]
-   (cond
-     (board/open-and-valid? input board) input
-     :else (prompt-until-valid board player-piece))))
+   (if (board/open-and-valid? input board)
+      input
+      (prompt-until-valid board player-piece))))
 
 (defn get-move [board current-type current-mark]
     (if (= current-type (second player-types))
