@@ -4,7 +4,6 @@
         (:require [clojure-tic-tac-toe.ai :as ai]))
 
 (def player-types ["human" "ai"])
-(declare get-move)
 
 (defn valid-input? [input]
   (cond
